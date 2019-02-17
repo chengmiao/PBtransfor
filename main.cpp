@@ -16,6 +16,11 @@ int main(int argc, char* argv[])
 
         TransPBClient client;
         client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
+
+        while (true)
+        {
+
+        }
     }
     catch (std::exception& e)
     {
