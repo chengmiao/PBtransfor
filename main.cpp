@@ -19,13 +19,13 @@ int main(int argc, char* argv[])
         client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
 
         std::cout << "Enter message" << std::endl;
-        //while (true)
-        //{
+        while (true)
+        {
             //char request[1024];
             //std::cin.getline(request, 1024);
             //uint32_t request_length = std::strlen(request);
             //client.send(request, request_length);
-        //}
+        }
     }
     catch (std::exception& e)
     {
