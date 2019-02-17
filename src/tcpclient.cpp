@@ -149,6 +149,8 @@ void TcpClient::run()
 
 	while(is_running)
 	{
+		std::cout << "thread" << std::endl;
+
 		fd_set read_fds;
 		fd_set write_fds;
 		fd_set except_fds;
