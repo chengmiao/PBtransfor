@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
                 char request[1024];
                 std::cin.getline(request, 1024);
                 uint32_t request_length = std::strlen(request);
-                send(request, request_length);
+                client.send(request, request_length);
             }
         }
     }
