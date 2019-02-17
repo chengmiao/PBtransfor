@@ -13,11 +13,7 @@ int main(int argc, char* argv[])
     std::cout << "=============TransPB Start==============" << std::endl;
 
     TransPBClient client;
-    if (!client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2]))))
-    {
-        std::cerr << "Cant Connect Server" << std::endl;
-        return 1;
-    }
-
+    client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])))
+  
     return 0;
 }
