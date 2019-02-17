@@ -20,14 +20,11 @@ int main(int argc, char* argv[])
 
         while (true)
         {
-            if (client.isConnected())
-            {
-                std::cout << "Enter message" << std::endl;
-                char request[1024];
-                std::cin.getline(request, 1024);
-                uint32_t request_length = std::strlen(request);
-                client.send(request, request_length);
-            }
+            std::cout << "Enter message" << std::endl;
+            char request[1024];
+            std::cin.getline(request, 1024);
+            uint32_t request_length = std::strlen(request);
+            client.send(request, request_length);
         }
     }
     catch (std::exception& e)
