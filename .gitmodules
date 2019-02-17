@@ -1,0 +1,6 @@
+[submodule "opt/sol2"]
+	path = opt/sol2
+	url = https://github.com/ThePhD/sol2.git
+[submodule "opt/lua-protobuf"]
+	path = opt/lua-protobuf
+	url = https://github.com/starwing/lua-protobuf.git
