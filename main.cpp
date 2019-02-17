@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
         //}
 
         client.disconnect();
+        std::cout << "Dead Loop" << std::endl;
     }
     catch (std::exception& e)
     {
