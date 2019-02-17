@@ -145,6 +145,8 @@ int TcpClient::do_recv()
 
 void TcpClient::run()
 {
+	m_recv_thread.join();
+
 	while(is_running)
 	{
 		fd_set read_fds;
