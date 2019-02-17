@@ -21,14 +21,11 @@ int main(int argc, char* argv[])
         //std::cout << "Enter message" << std::endl;
         //while (true)
         //{
-            //char request[1024];
-            //std::cin.getline(request, 1024);
-            //uint32_t request_length = std::strlen(request);
-            //client.send(request, request_length);
+            char request[1024];
+            std::cin.getline(request, 1024);
+            uint32_t request_length = std::strlen(request);
+            client.send(request, request_length);
         //}
-
-        client.disconnect();
-        std::cout << "Dead Loop" << std::endl;
     }
     catch (std::exception& e)
     {
