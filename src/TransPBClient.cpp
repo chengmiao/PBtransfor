@@ -22,3 +22,8 @@ void TransPBClient::on_connected()
     uint32_t request_length = std::strlen(request);
     send(request, request_length);
 }
+
+void TransPBClient::loop()
+{
+    m_recv_thread.join();
+}
