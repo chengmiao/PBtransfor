@@ -78,7 +78,7 @@ int TcpClient::send(const char * pData, uint32_t len)
 	if (is_connected)
 	{
 		int ret = ::send(fd, pData, len,0); 
-		if (ret >  0)
+		if (ret <= 0)
 		{
 			this->on_disconnect(); 
 			this->disconnect(); 
