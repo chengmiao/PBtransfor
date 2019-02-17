@@ -1,6 +1,21 @@
 #include "TransPBClient.h"
 
+#include <iostream>
+
 int TransPBClient::on_recv(const char * pData, uint32_t len)
 {
-    send(pData, len);
+    std::cout << "Enter message" << std::endl;
+    char request[1024];
+    std::cin.getline(request, 1024);
+    uint32_t request_length = std::strlen(request);
+    send(request, request_length);
+}
+
+void TransPBClient::on_connected()
+{
+    std::cout << "Enter message" << std::endl;
+    char request[1024];
+    std::cin.getline(request, 1024);
+    uint32_t request_length = std::strlen(request);
+    send(request, request_length);
 }
