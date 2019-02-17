@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     std::cout << "=============TransPB Start==============" << std::endl;
 
     TransPBClient client;
-    client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])))
+    client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
   
     return 0;
 }
