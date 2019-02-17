@@ -67,7 +67,7 @@ int TcpClient::connect (const char * pHost, uint16_t port, bool reconnect  )
 		int ret = do_connect(); 
 		m_recv_thread = std::thread(std::bind(&TcpClient::run, this)); 
 
-		std::cout << std::itoa(ret) << std::endl;
+		std::cout << ::itoa(ret) << std::endl;
 		return ret; 
 	}
 	return 0; 
