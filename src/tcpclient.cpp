@@ -4,6 +4,8 @@
 #include <netdb.h>
 #include <functional>
 
+#include <string.h>
+
 int TcpClient::do_connect()
 {
 	static int try_period = 1; 
