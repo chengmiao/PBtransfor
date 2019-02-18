@@ -38,9 +38,15 @@ int main(int argc, char* argv[])
             lua["filename"] = proto_file_name;
             lua["messageName"] = message_type_name;
 
-            lua["TypeFieldFunc"] = [&lua](std::string name, std::string number, std::string type, std::string option ){
+            lua["TypeFieldFunc"] = [&lua](std::string message, std::string name, std::string number, std::string type, std::string option ){
                 std::cout << "Enter Type Value" << std::endl;
-                std::cout << "Name :" << name << "Index :" << number << "Type :" << type << "Option :" << option << std::endl;
+
+                std::cout << "Message       :" << "    " << message << std::endl;
+                std::cout << "FieldName     :" << "    " << name << std::endl;
+                std::cout << "FieldIndex    :" << "    " << number << std::endl;
+                std::cout << "FieldBaseType :" << "    " << type << std::endl;
+                std::cout << "FieldOption   :" << "    " << option << std::endl;
+
                 char type_value[1024];
                 std::cin.getline(type_value, 1024);
                 uint32_t length = std::strlen(type_value);
