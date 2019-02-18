@@ -8,11 +8,11 @@ int main(int argc, char* argv[])
 {
     try
     {
-        if (argc != 3)
-        {
-            std::cerr << "Usage: " << argv[0] << " <ip>" << "<port>" << std::endl;
-            return 1;
-        }
+        //if (argc != 3)
+        //{
+            //std::cerr << "Usage: " << argv[0] << " <ip>" << "<port>" << std::endl;
+            //return 1;
+        //}
 
         std::cout << "=============TransPB Start==============" << std::endl;
 
@@ -22,10 +22,6 @@ int main(int argc, char* argv[])
         std::cout << "============== Use Lua Start =================" << std::endl;
         sol::state lua;
         lua.open_libraries();
-
-        lua["filename"] = argv[1];
-        lua["messageName"] = argv[2];
-        lua.script_file("Transfor.lua");
 
         std::cout << "Enter message" << std::endl;
         while (true)
