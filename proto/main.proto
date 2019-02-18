@@ -1,0 +1,8 @@
+syntax = "proto3";
+import "sub.proto";
+package MAIN;
+
+message AddressBook 
+{
+    repeated SUB.Person person = 1;
+}

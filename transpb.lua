@@ -6,7 +6,7 @@ local pb = require "pb"
 local protoc = require "protoc"
 
 
-protoc.paths[#protoc.paths + 1] = "/root/dbserver/proto"
+protoc.paths[#protoc.paths + 1] = "/root/transClient/proto"
 protoc.include_imports = true
 protoc:loadfile(filename)
 pb.option("enum_as_value")
