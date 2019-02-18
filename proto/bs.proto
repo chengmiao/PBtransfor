@@ -1,8 +1,4 @@
-﻿//
-// 这个文件描述了BallanceServer需要处理的协议
-//
-
-syntax = "proto3";
+﻿syntax = "proto3";
 package BS;
 
 //
