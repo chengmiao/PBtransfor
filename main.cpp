@@ -14,18 +14,17 @@ int main(int argc, char* argv[])
             //return 1;
         //}
 
-        std::cout << "=============TransPB Start==============" << std::endl;
-
         //TransPBClient client;
         //client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
 
-        std::cout << "============== Use Lua Start =================" << std::endl;
+        //std::cout << "============== Use Lua Start =================" << std::endl;
         sol::state lua;
         lua.open_libraries();
 
-        std::cout << "Enter message" << std::endl;
         while (true)
         {
+            std::cout << "===============TransPB Start================" << std::endl;
+
             std::cout << "Enter Proto File Name :" << std::endl;
             char proto_file_name[1024];
             std::cin.getline(proto_file_name, 1024);
@@ -39,6 +38,8 @@ int main(int argc, char* argv[])
             lua["filename"] = proto_file_name;
             lua["messageName"] = message_type_name;
             lua.script_file("transpb.lua");
+
+            std::cout << "===============TransPB End!!================" << std::endl;
 
             //client.send(request, request_length);
         }
