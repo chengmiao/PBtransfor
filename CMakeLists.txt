@@ -16,7 +16,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 add_executable(PBclient main.cpp ${CLIENT_SRCS})
 target_link_libraries(PBclient liblua.a)
 
-#add_library(pb SHARED ${CMAKE_SOURCE_DIR}/opt/lua-protobuf/pb.c)
+add_library(pb SHARED ${CMAKE_SOURCE_DIR}/opt/lua-protobuf/pb.c)
 
 
 
