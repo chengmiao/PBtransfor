@@ -66,8 +66,6 @@ int TcpClient::connect (const char * pHost, uint16_t port, bool reconnect  )
 		is_running  = true; 
 		int ret = do_connect(); 
 		m_recv_thread = std::thread(std::bind(&TcpClient::run, this)); 
-
-		std::cout << std::to_string(ret) << std::endl;
 		return ret; 
 	}
 	return 0; 
@@ -145,8 +143,6 @@ int TcpClient::do_recv()
 
 void TcpClient::run()
 {
-	m_recv_thread.join();
-
 	while(is_running)
 	{
 		std::cout << "thread" << std::endl;
