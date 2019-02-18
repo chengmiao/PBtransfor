@@ -61,6 +61,7 @@ for name in pb.types() do
 end
 
 MakeMessageTable(dataType, data)
+print(require "serpent".block(data))
 
 -- encode lua table data into binary format in lua string and return
 local bytes = assert(pb.encode(messageName, data))
