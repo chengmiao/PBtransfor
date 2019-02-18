@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 
             lua["TypeFieldFunc"] = [&lua](std::string name, std::string number, std::string type, std::string option ){
                 std::cout << "Enter Type Value" << std::endl;
-                std::cout << "Name :" << name << "Index :" << number << "Type :" << type << "Default Value :" << value << "Option :" << option << std::endl;
+                std::cout << "Name :" << name << "Index :" << number << "Type :" << type << "Option :" << option << std::endl;
                 char type_value[1024];
                 std::cin.getline(type_value, 1024);
                 uint32_t length = std::strlen(type_value);
