@@ -23,3 +23,13 @@ message Person
 
     repeated PhoneNumber phone = 4;
 }
+
+message RS_StartRsRankAck {
+    enum ErrorCode {
+        ERR_OK = 0;
+        ERR_FAIL = 1;
+    }
+    ErrorCode error_code = 1;
+    uint64 trans_id = 2;
+    uint32 rs_id = 3;
+}
