@@ -1,0 +1,89 @@
+﻿//
+// 这个文件描述了RankServer需要处理的协议
+//
+
+syntax = "proto3";
+import "gate.proto";
+package RS;
+
+//
+//CLI_:客户端,GATE_:网关,RS_:排行榜服务器,BS_:负载均衡服务器,CS_:中央服务器
+//
+
+//----------------------------------------------------------------------------------------------------
+//-------------------------------------以下协议是Gate发出来的---------------------------------------
+
+//Gate报告给RankServer自身信息
+message GATE_GateInfoNtf {
+	uint32 server_type = 1;
+    uint32 server_id = 2;
+	repeated GsInfo gss = 3;
+}
+
+message GsInfo {
+	string app_id = 1;
+	uint64 gs_sid = 2;
+}
+
+//gate发出的，通知Gs上线
+message GATE_GsOnlineNtf {
+    GsInfo gs = 1;
+	uint32 gate_server_id = 2;
+}
+
+//gate发出的，通知Gs离线
+message GATE_GsOfflineNtf {
+	uint64 gs_sid = 1;
+}
+
+//gate发出的，请求更新玩家的排行榜
+message GATE_UpdateRankReq {
+	uint64 gs_sid = 1;
+	uint32 template_id = 2;
+	uint32 instance_id = 3;
+    uint64 role_id = 4;
+    string sort_field = 5;
+    bytes props = 6;
+	bytes status = 7;
+}
+
+//gate发出的，查询排行榜数据
+message GATE_QueryRankReq {
+	uint64 gs_sid = 1;
+	uint32 template_id = 2;
+	uint32 instance_id = 3;
+    uint64 role_id = 4;
+	bytes status = 5;
+}
+
+//gate发出的，查询历史排行榜数据
+message GATE_QueryHistoryRankReq {
+	uint64 gs_sid = 1;
+	uint32 template_id = 2;
+	uint32 instance_id = 3;
+    uint64 role_id = 4;
+	bytes status = 5;
+}
+
+//----------------------------------------------------------------------------------------------------
+//-------------------------------------以下协议是CenterServer发出来的---------------------------------------
+
+//CS报告给RankServer自身信息
+message CS_CsInfoNtf {
+	uint32 server_type = 1;
+	GATE.SwitchedRanks switched_ranks = 2;
+}
+
+//中央服务器发出的，请求关闭指定rs上的排行榜
+message CS_StopRsRankReq {
+	uint64 trans_id = 1;
+	uint32 rs_server_id = 2;
+	uint32 template_id = 3;
+}
+
+//中央服务器发出的，请求开启指定rs上的排行榜
+message CS_StartRsRankReq {
+	uint64 trans_id = 1;
+	uint32 rs_server_id = 2;
+	repeated uint32 template_ids = 3;
+}

@@ -1,0 +1,98 @@
+﻿//
+// 这个文件描述了GameServer（在本系统中是客户端）需要处理的协议
+//
+
+syntax = "proto3";
+package GS;
+
+//
+//CLI_:客户端,GATE_:网关,RS_:排行榜服务器,BS_:负载均衡服务器,CS_:中央服务器
+//
+
+//gs请求gate的地址
+message BS_GetGateAddrAck {
+	enum ErrorCode {
+		ERR_OK = 0;
+		ERR_FAIL = 1;
+	}
+	ErrorCode error_code = 1;
+	string gate_ip_addr = 2;
+	uint32 port = 3;
+}
+
+//gate发给gs，认证结果
+message GATE_GsAuthenAck {
+	enum ErrorCode {
+		ERR_OK = 0;
+		ERR_FAIL = 1;
+	}
+	
+	ErrorCode error_code = 1;
+}
+
+//GATE发送给gs，更新玩家的排行榜的回应
+message GATE_UpdateRankAck {
+	enum ErrorCode {
+		ERR_OK = 0;	//成功
+		ERR_GS_NOT_FOUND = 1;	
+		ERR_NOT_AUTHENED = 2;
+		ERR_RANK_CONFIG_NOT_FOUND = 3;
+		ERR_RS_NOT_FOUND = 4;
+		ERR_RANK_NOT_FOUND = 5;
+		ERR_SORT_FIELD_MISMATCH = 6;
+		ERR_NOT_ON_RANK = 7;
+		ERR_WRONG_TEMPLATE = 8;	//模板id不属于该appid
+	}
+	ErrorCode error_code = 1;
+	uint32 template_id = 2;
+	uint32 instance_id = 3;
+    uint64 role_id = 4;
+	uint32 rank_pos = 5;
+	bytes status = 6;
+}
+
+message RankItem {
+	uint32 rank_index = 1;
+	uint64 role_id = 2;
+    bytes props = 3;
+}
+
+//GATE发送给gs，查询排行榜的回应
+message GATE_QueryRankAck {
+	enum ErrorCode {
+		ERR_OK = 0;
+		ERR_GS_NOT_FOUND = 1;
+		ERR_NOT_AUTHENED = 2;
+		ERR_RANK_CONFIG_NOT_FOUND = 3;
+		ERR_RS_NOT_FOUND = 4;
+		ERR_RANK_NOT_FOUND = 5;
+		ERR_WRONG_TEMPLATE = 6;	//模板id不属于该appid
+	}
+
+	ErrorCode error_code = 1;
+	uint32 template_id = 2;
+	uint32 instance_id = 3;
+    repeated RankItem rank_items = 4;
+	RankItem me = 5;
+	bytes status = 6;
+}
+
+//GATE发送给gs，查询历史排行榜的回应
+message GATE_QueryHistoryRankAck {
+	enum ErrorCode {
+		ERR_OK = 0;
+		ERR_GS_NOT_FOUND = 1;
+		ERR_NOT_AUTHENED = 2;
+		ERR_RANK_CONFIG_NOT_FOUND = 3;
+		ERR_RS_NOT_FOUND = 4;
+		ERR_RANK_NOT_FOUND = 5;
+		ERR_WRONG_TEMPLATE = 6;	//模板id不属于该appid
+	}
+
+	ErrorCode error_code = 1;
+	uint32 template_id = 2;
+	uint32 instance_id = 3;
+    repeated RankItem rank_items = 4;
+	RankItem me = 5;
+	bytes status = 6;
+}

@@ -1,0 +1,77 @@
+﻿//
+// 这个文件描述了CenterServer需要处理的协议
+//
+
+syntax = "proto3";
+package CS;
+
+//
+// CLI_:客户端,GATE_:网关,RS_:排行榜服务器,BS_:负载均衡服务器,CS_:中央服务器
+//
+
+//----------------------------------------------------------------------------------------------------
+//-------------------------------------以下协议是Gate发出来的---------------------------------------
+
+//Gate报告给CenterServer自身信息
+message GATE_GateInfoNtf {
+	uint32 server_type = 1;
+    uint32 server_id = 2;
+}
+
+//gate发出的Gs请求身份认证
+message GATE_GsAuthenReq {
+    string token = 1;
+    string app_id = 2;
+	uint64 gs_sid = 3;
+}
+
+//gate发出的，通知Gs上线
+message GATE_GsOnlineNtf {
+    string app_id = 1;
+	uint64 gs_sid = 2;
+}
+
+//gate发出的，通知Gs离线
+message GATE_GsOfflineNtf {
+	uint64 gs_sid = 1;
+}
+
+//----------------------------------------------------------------------------------------------------
+//-------------------------------------以下协议是排行榜服务器发出来的---------------------------------------
+
+//Rs报告给CenterServer自身信息
+message RS_RsInfoNtf {
+	uint32 server_type = 1;
+    uint32 server_id = 2;
+}
+
+//Rs发出的，回应停止排行榜
+message RS_StopRsRankAck {
+	enum ErrorCode {
+		ERR_OK = 0;
+		ERR_FAIL = 1;
+	}
+	ErrorCode error_code = 1;
+	uint64 trans_id = 2;
+	uint32 rs_id = 3;
+	repeated uint32 template_ids = 4;
+}
+
+//Rs发出的，回应开启排行榜
+message RS_StartRsRankAck {
+	enum ErrorCode {
+		ERR_OK = 0;
+		ERR_FAIL = 1;
+	}
+	ErrorCode error_code = 1;
+	uint64 trans_id = 2;
+	uint32 rs_id = 3;
+}
+
+//----------------------------------------------------------------------------------------------------
+//-------------------------------------以下协议是BalanceServer发出来的---------------------------------------
+
+//Bs报告给CenterServer自身信息
+message BS_BsInfoNtf {
+	uint32 server_type = 1;
+}

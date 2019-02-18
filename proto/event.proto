@@ -1,0 +1,46 @@
+﻿//
+// 这个文件描述了服务器内部网络事件的定义
+//
+
+syntax = "proto3";
+package EVENT;
+
+message EventConnect {
+	bool suc = 1;
+	uint64 sid = 2;
+	string remote_ip = 3;
+	uint32 remote_port = 4;
+	uint32 remote_host_type = 5;
+}
+
+message EventAccept {
+	uint64 sid = 1;
+	string remote_ip = 2;
+	uint32 remote_port = 3;
+	uint32 remote_host_type = 4;
+}
+
+message EventDisconnect {
+	uint64 sid = 1;
+	string remote_ip = 2;
+	uint32 remote_port = 3;
+	string local_ip = 4;
+	uint32 local_port = 5;
+	uint32 remote_host_type = 6;
+	uint32 remote_host_id = 7;
+}
+
+message EventRegServerReq {
+	uint32 server_type = 1;
+	uint32 server_id = 2;
+	string work_ip = 3;
+	uint32 work_port = 4;
+	uint32 version = 5;
+}
+
+message EventRegServerAck {
+	uint32 server_type = 1;
+	uint32 server_id = 2;
+	uint32 dispatch_id = 3;
+	uint32 version = 4;
+}
