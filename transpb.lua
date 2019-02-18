@@ -12,21 +12,10 @@ protoc:loadfile(filename)
 pb.option("enum_as_value")
 
 local randomData = {
-    bool     = true,
-    double   = 55.55,
-    float    = 123.123,
-    int32    = -64,
-    uint32   = 64,
-    int64    = -1245,
-    uint64   = 1245,
-    sint32   = -88,
-    sint64   = -12456,
-    fixed32  = 666,
-    fixed64  = 6666,
-    sfixed32 = 45,
-    sfixed64 = 54,
-    string   = "ChengMiao",
-    bytes    = "X",
+    bool     = function(str) return str == "true" end,
+    string   = function(str) return tostring(str) end,
+    bytes    = function(str) return tostring(str) end,
+    other    = function(str) return tonumber(str) end
 }
 
 local data = {}
@@ -45,11 +34,25 @@ function MakeMessageTable(field_type, main_table)
                 main_table[name] = {}
                 for i=1, repeat_num do
                     TypeFieldFunc(field_type, name, tostring(number), type, option)
-                    main_table[name][i] = TypeValue
+
+                    local func
+                    if randomData[type] ~= nil then
+                        func =  randomData[type]
+                    else
+                        func = randomData[other]
+                    end
+                    main_table[name][i] = func(TypeValue)
                 end
             else
+                local func
+                if randomData[type] ~= nil then
+                    func =  randomData[type]
+                else
+                    func = randomData[other]
+                end
+
                 TypeFieldFunc(field_type, name, tostring(number), type, option)
-                main_table[name] = TypeValue
+                main_table[name] = func(TypeValue)
             end
         else 
             local _, _, subType = pb.type(type)
