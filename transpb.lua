@@ -49,8 +49,10 @@ function MakeMessageTable(field_type, main_table)
                 local func
                 if randomData[type] ~= nil then
                     func = randomData[type]
+                    print(type)
                 else
                     func = randomData[other]
+                    print(other)
                 end
 
                 TypeFieldFunc(field_type, name, tostring(number), type, option)
