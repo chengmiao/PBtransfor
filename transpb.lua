@@ -56,8 +56,16 @@ function MakeMessageTable(field_type, main_table)
             if subType == "enum" then
                 main_table[name] = pb.enum(type, 1)
             elseif subType == "message" then
+                local repeat_num = 1
+                if option == "repeated" then
+                    FieldRepeatNumFunc(field_type, name)
+                    repeat_num = tonumber(RepeatedNums)
+                end 
+
                 main_table[name] = {}
-                main_table[name][1] = MakeMessageTable(type, {})
+                for i=1, repeat_num do
+                    main_table[name][i] = MakeMessageTable(type, {})
+                end
             end
         end
     end
