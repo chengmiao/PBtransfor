@@ -25,7 +25,7 @@ function MakeMessageTable(field_type, main_table)
     for name, number, type, value, option in pb.fields(field_type) do
         if type_table[type] == nil then
             local repeat_num = 1
-            if option == "repeated" then
+            if option == "repeated" or option == "packed" then
                 FieldRepeatNumFunc(field_type, name)
                 repeat_num = tonumber(RepeatedNums)
             end 
