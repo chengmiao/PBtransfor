@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
             lua.script_file("transpb.lua");
 
             std::cout << "===============TransPB End!!================" << std::endl;
+            std::cout << "////////////////////////////////////////////" << std::endl;
 
             //client.send(request, request_length);
         }
