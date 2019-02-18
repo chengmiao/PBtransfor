@@ -1,5 +1,5 @@
-package.path = ';/root/dbserver/opt/lua-protobuf/?.lua'
-package.cpath = ';/root/dbserver/lib/?.so'
+package.path = ';/root/transClient/opt/lua-protobuf/?.lua'
+package.cpath = ';/root/transClient/lib/?.so'
 
 
 local pb = require "pb"
