@@ -35,7 +35,9 @@ local type_table = {}
 function MakeMessageTable(field_type, main_table) 
     for name, number, type, value, option in pb.fields(field_type) do
         if type_table[type] == nil then
-            main_table[name] = randomData[type]
+            TypeFieldFunc(name, number, type, value, option)
+            --main_table[name] = randomData[type]
+            main_table[name] = type_value
         else 
             local _, _, subType = pb.type(type)
             if subType == "enum" then

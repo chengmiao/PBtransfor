@@ -37,6 +37,16 @@ int main(int argc, char* argv[])
 
             lua["filename"] = proto_file_name;
             lua["messageName"] = message_type_name;
+
+            lua["TypeFieldFunc"] = [&lua](std::string name, std::string number, std::string type, std::string value, std::string option ){
+                std::cout << "Enter Type Value" << std::endl;
+                std::cout << "Name :" << name << "Index :" << number << "Type :" << type << "Default Value :" << value << "Option :" << option << std::endl;
+                char type_value[1024];
+                std::cin.getline(type_value, 1024);
+                uint32_t length = std::strlen(type_value);
+                lua["TypeValue"] = type_value;
+            };
+
             lua.script_file("transpb.lua");
 
             std::cout << "===============TransPB End!!================" << std::endl;
