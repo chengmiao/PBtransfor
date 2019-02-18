@@ -35,7 +35,7 @@ local type_table = {}
 function MakeMessageTable(field_type, main_table) 
     for name, number, type, value, option in pb.fields(field_type) do
         if type_table[type] == nil then
-            TypeFieldFunc(name, number, type, value, option)
+            TypeFieldFunc(name, tostring(number), type, option)
             --main_table[name] = randomData[type]
             main_table[name] = type_value
         else 
