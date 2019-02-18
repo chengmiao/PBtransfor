@@ -53,6 +53,15 @@ int main(int argc, char* argv[])
                 lua["TypeValue"] = type_value;
             };
 
+            lua["FieldRepeatNumFunc"] = [&lua](std::string message, std::string name){
+                std::cout << "Enter Repeated Nums :" << "Message->" << message << "FieldName->" << name << std::endl;
+
+                char type_value[1024];
+                std::cin.getline(type_value, 1024);
+                uint32_t length = std::strlen(type_value);
+                lua["RepeatedNums"] = type_value;
+            };
+
             lua.script_file("transpb.lua");
 
             std::cout << "===============TransPB End!!================" << std::endl;

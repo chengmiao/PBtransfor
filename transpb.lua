@@ -35,9 +35,22 @@ local type_table = {}
 function MakeMessageTable(field_type, main_table) 
     for name, number, type, value, option in pb.fields(field_type) do
         if type_table[type] == nil then
-            TypeFieldFunc(field_type, name, tostring(number), type, option)
-            --main_table[name] = randomData[type]
-            main_table[name] = TypeValue
+            local repeat_num = 1
+            if option == "repeated" then
+                FieldRepeatNumFunc(field_type, name)
+                repeat_num = tonumber(RepeatedNums)
+            end 
+
+            if repeat_num > 1 then
+                main_table[name] = {}
+                for i=1, repeat_num do
+                    TypeFieldFunc(field_type, name, tostring(number), type, option)
+                    main_table[name][i] = TypeValue
+                end
+            else
+                TypeFieldFunc(field_type, name, tostring(number), type, option)
+                main_table[name] = TypeValue
+            end
         else 
             local _, _, subType = pb.type(type)
             if subType == "enum" then
@@ -61,7 +74,6 @@ for name in pb.types() do
 end
 
 MakeMessageTable(dataType, data)
-print(require "serpent".block(data))
 
 -- encode lua table data into binary format in lua string and return
 local bytes = assert(pb.encode(messageName, data))
