@@ -30,7 +30,7 @@ function MakeMessageTable(field_type, main_table)
                 repeat_num = tonumber(RepeatedNums)
             end 
 
-            if repeat_num > 1 then
+            if repeat_num > 1 or option == "repeated" or option == "packed" then
                 main_table[name] = {}
                 for i=1, repeat_num do
                     TypeFieldFunc(field_type, name, tostring(number), type, option)
