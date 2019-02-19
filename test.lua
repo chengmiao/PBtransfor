@@ -42,7 +42,7 @@ function HandleMessageBaseType(MessageTable, MessageType, FieldName, FieldIndex,
         MessageTable[FieldName] = {}
         for i=1, num do
             TypeFieldFunc(MessageType, FieldName, tostring(FieldIndex), FieldBaseType, FieldOption)
-            if randomData[type] ~= nil then
+            if randomData[FieldBaseType] ~= nil then
                 MessageTable[FieldName][i] = randomData[FieldBaseType](TypeValue)
             else
                 MessageTable[FieldName][i] = randomData["other"](TypeValue)
@@ -50,7 +50,7 @@ function HandleMessageBaseType(MessageTable, MessageType, FieldName, FieldIndex,
         end
     else
         TypeFieldFunc(MessageType, FieldName, tostring(FieldIndex), FieldBaseType, FieldOption)
-        if randomData[type] ~= nil then
+        if randomData[FieldBaseType] ~= nil then
             MessageTable[FieldName] = randomData[FieldBaseType](TypeValue)
         else
             MessageTable[FieldName] = randomData["other"](TypeValue)
@@ -77,9 +77,7 @@ function HandleMessageNestType(MessageTable, MessageType, FieldName, FieldBaseTy
 
     MessageTable[FieldName] = {}
     for i=1, num do
-        local test_1 = MakeMessageTable(FieldBaseType, {})
-        MessageTable[FieldName][i] = test_1
-        print(require "serpent".block(test_1))
+        MessageTable[FieldName][i] = MakeMessageTable(FieldBaseType, {})
     end
 end
 
