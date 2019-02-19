@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
             std::cout << "===============TransPB Start================" << std::endl;
             NetHead head;
             head.flag = 257;
-            std::cout << "Head Size :" << std::to_string(head.flag) << std::endl;
+            std::cout << "Flag Value :" << std::to_string(head.flag) << "Length Value" << std::to_string(head.len) << std::endl;
 
 
             std::cout << "Enter Proto File Name :" << std::endl;
