@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
             NetHead head;
             head.len = 0;
             head.flag = 0;
-            head.flag = 257;
+            head.len = 16777217;
             std::cout << "Flag Value :" << std::to_string(head.flag) << "Length Value" << std::to_string(head.len) << std::endl;
 
 
