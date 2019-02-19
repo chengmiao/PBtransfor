@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
                 lua["RepeatedNums"] = type_value;
             };
 
-            lua["ChooseEnumFunc"] = [&lua](std::string enum_name, std::stirng type, std::string index, std::string name){
+            lua["ChooseEnumFunc"] = [&lua](std::string enum_name, std::string type, std::string index, std::string name){
                 std::cout << "Choose Enum Value :" << "Enum Type->" << type << "    " << "Enum Value->" << enum_name << std::endl;
                 std::cout << "Name    :" << "    " << name << std::endl;
                 std::cout << "Index   :" << "    " << index << std::endl;
