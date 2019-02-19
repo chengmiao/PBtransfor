@@ -77,7 +77,9 @@ function HandleMessageNestType(MessageTable, MessageType, FieldName, FieldBaseTy
 
     MessageTable[FieldName] = {}
     for i=1, num do
-        MessageTable[FieldName][i] = MakeMessageTable(FieldBaseType, {})
+        local test_1 = MakeMessageTable(FieldBaseType, {})
+        MessageTable[FieldName][i] = test_1
+        print(require "serpent".block(test_1))
     end
 end
 
