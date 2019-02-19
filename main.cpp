@@ -4,6 +4,16 @@
 
 #include "TransPBClient.h"
 
+#pragma pack(push, 1)
+struct NetHead
+{
+	uint32_t len;		//这个长度是指报文体的长度，没有包括报文头的长度
+	uint32_t msg_id;
+};
+#pragma pack(pop)
+
+const size_t NET_HEAD_SIZE = sizeof(NetHead);
+
 int main(int argc, char* argv[])
 {
     try
@@ -24,6 +34,8 @@ int main(int argc, char* argv[])
         while (true)
         {
             std::cout << "===============TransPB Start================" << std::endl;
+            std::cout << "Head Size :" << std::to_string(NET_HEAD_SIZE) << std::endl;
+
 
             std::cout << "Enter Proto File Name :" << std::endl;
             char proto_file_name[1024];
