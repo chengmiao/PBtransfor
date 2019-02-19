@@ -58,7 +58,7 @@ function MakeMessageTable(field_type, main_table)
             local _, _, subType = pb.type(type)
             if subType == "enum" then
                 local enum_name = ""
-                local i = 1
+                local i = 0
                 while pb.enum(type, i) ~= nil do
                     enum_name = enum_name..pb.enum(type, i).."  "
                     i = i + 1
