@@ -34,7 +34,9 @@ int main(int argc, char* argv[])
         while (true)
         {
             std::cout << "===============TransPB Start================" << std::endl;
-            std::cout << "Head Size :" << std::to_string(NET_HEAD_SIZE) << std::endl;
+            NetHead head;
+            head.flag = 257;
+            std::cout << "Head Size :" << std::to_string(head.flag) << std::endl;
 
 
             std::cout << "Enter Proto File Name :" << std::endl;
