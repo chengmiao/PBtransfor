@@ -35,9 +35,7 @@ int main(int argc, char* argv[])
         {
             std::cout << "===============TransPB Start================" << std::endl;
             NetHead head;
-            head.len = 0;
-            head.flag = 0;
-            head.len = 16777217;
+            head.flag = 232;
             std::cout << "Flag Value :" << std::to_string(head.flag) << "Length Value" << std::to_string(head.len) << std::endl;
 
 
