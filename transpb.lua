@@ -57,7 +57,15 @@ function MakeMessageTable(field_type, main_table)
         else 
             local _, _, subType = pb.type(type)
             if subType == "enum" then
-                main_table[name] = pb.enum(type, 1)
+                local enum_name
+                local i = 1
+                while pb.enmum(type, i) ~= nil do
+                    enum_name..pb.enmum(type, i).."  "
+                    i = i + 1
+                end
+
+                ChooseEnumFunc(enum_name, type, tostring(number), name)
+                main_table[name] = EnumValue
             elseif subType == "message" then
                 local repeat_num = 1
                 if option == "repeated" then

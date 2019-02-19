@@ -62,6 +62,17 @@ int main(int argc, char* argv[])
                 lua["RepeatedNums"] = type_value;
             };
 
+            lua["ChooseEnumFunc"] = [&lua](std::string enum_name, std::stirng type, std::string index, std::string name){
+                std::cout << "Choose Enum Value :" << "Enum Type->" << type << "    " << "Enum Value->" << enum_name << std::endl;
+                std::cout << "Name    :" << "    " << name << std::endl;
+                std::cout << "Index   :" << "    " << index << std::endl;
+
+                char type_value[1024];
+                std::cin.getline(type_value, 1024);
+                uint32_t length = std::strlen(type_value);
+                lua["EnumValue"] = type_value;
+            };
+
             lua.script_file("transpb.lua");
 
             std::cout << "===============TransPB End!!================" << std::endl;
