@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
             };
 
             std::string encode_data = lua.script_file("transpb.lua");
-            std::cout << "Encode Data Num :" << std::to_string(encde_data.length());
+            std::cout << "Encode Data Num :" << std::to_string(encode_data.length());
 
             std::cout << "===============TransPB End!!================" << std::endl;
             std::cout << "////////////////////////////////////////////" << std::endl;
