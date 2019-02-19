@@ -7,8 +7,8 @@
 #pragma pack(push, 1)
 struct NetHead
 {
-	uint32_t len;		//这个长度是指报文体的长度，没有包括报文头的长度
-	uint32_t msg_id;
+	uint32_t len:24;		//这个长度是指报文体的长度，没有包括报文头的长度
+	uint32_t flag:8;
 };
 #pragma pack(pop)
 
