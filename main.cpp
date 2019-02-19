@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
                 lua["EnumValue"] = type_value;
             };
 
-            std::string encode_data = lua.script_file("test.lua");
+            std::string encode_data = lua.script_file("transpb.lua");
             std::cout << "Encode Data Num :" << std::to_string(encode_data.length());
 
             std::cout << "===============TransPB End!!================" << std::endl;

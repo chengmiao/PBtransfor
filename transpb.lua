@@ -21,62 +21,76 @@ local randomData = {
 local data = {}
 local type_table = {}
 
+-- 获取重复字段的重复次数
+function GetRepeatedFieldNums(MessageType, FieldName, FieldOption)
+    local repeat_num = 1
+    local is_repeated = false
+    if FieldOption == "repeated" or option == "packed" then
+        is_repeated = true
+        FieldRepeatNumFunc(MessageType, FieldName)
+        repeat_num = tonumber(RepeatedNums)
+    end
+
+    return repeat_num, is_repeated
+end
+
+-- 处理protobuf消息中的基础类型
+function HandleMessageBaseType(MessageTable, MessageType, FieldName, FieldIndex, FieldBaseType, FieldOption)
+    local num, is_repeated = GetRepeatedFieldNums(MessageType, FieldName, FieldOption)
+
+    if num > 1 or is_repeated then
+        MessageTable[FieldName] = {}
+        for i=1, num do
+            TypeFieldFunc(MessageType, FieldName, tostring(FieldIndex), FieldBaseType, FieldOption)
+            if randomData[FieldBaseType] ~= nil then
+                MessageTable[FieldName][i] = randomData[FieldBaseType](TypeValue)
+            else
+                MessageTable[FieldName][i] = randomData["other"](TypeValue)
+            end
+        end
+    else
+        TypeFieldFunc(MessageType, FieldName, tostring(FieldIndex), FieldBaseType, FieldOption)
+        if randomData[FieldBaseType] ~= nil then
+            MessageTable[FieldName] = randomData[FieldBaseType](TypeValue)
+        else
+            MessageTable[FieldName] = randomData["other"](TypeValue)
+        end
+    end
+end
+
+-- 处理protobuf消息中的枚举类型
+function HandleMessageEnumType(MessageTable, FieldName, FieldIndex, FieldBaseType)
+    local enum_name = ""
+    local i = 0
+    while pb.enum(FieldBaseType, i) ~= nil do
+        enum_name = enum_name..pb.enum(FieldBaseType, i).."  "
+        i = i + 1
+    end
+
+    ChooseEnumFunc(enum_name, FieldBaseType, tostring(FieldIndex), FieldName)
+    MessageTable[FieldName] = EnumValue
+end
+
+-- 处理protobuf消息中的嵌套消息类型
+function HandleMessageNestType(MessageTable, MessageType, FieldName, FieldBaseType, FieldOption)
+    local num = GetRepeatedFieldNums(MessageType, FieldName, FieldOption)
+
+    MessageTable[FieldName] = {}
+    for i=1, num do
+        MessageTable[FieldName][i] = MakeMessageTable(FieldBaseType, {})
+    end
+end
+
 function MakeMessageTable(field_type, main_table) 
     for name, number, type, value, option in pb.fields(field_type) do
         if type_table[type] == nil then
-            local repeat_num = 1
-            if option == "repeated" or option == "packed" then
-                FieldRepeatNumFunc(field_type, name)
-                repeat_num = tonumber(RepeatedNums)
-            end 
-
-            if repeat_num > 1 or option == "repeated" or option == "packed" then
-                main_table[name] = {}
-                for i=1, repeat_num do
-                    TypeFieldFunc(field_type, name, tostring(number), type, option)
-
-                    local func
-                    if randomData[type] ~= nil then
-                        func = randomData[type]
-                    else
-                        func = randomData["other"]
-                    end
-                    main_table[name][i] = func(TypeValue)
-                end
-            else
-                local func
-                if randomData[type] ~= nil then
-                    func = randomData[type]
-                else
-                    func = randomData["other"]
-                end
-
-                TypeFieldFunc(field_type, name, tostring(number), type, option)
-                main_table[name] = func(TypeValue)
-            end
+            HandleMessageBaseType(main_table, field_type, name, number, type, option)
         else 
             local _, _, subType = pb.type(type)
             if subType == "enum" then
-                local enum_name = ""
-                local i = 0
-                while pb.enum(type, i) ~= nil do
-                    enum_name = enum_name..pb.enum(type, i).."  "
-                    i = i + 1
-                end
-
-                ChooseEnumFunc(enum_name, type, tostring(number), name)
-                main_table[name] = EnumValue
+                HandleMessageEnumType(main_table, name, number, type)
             elseif subType == "message" then
-                local repeat_num = 1
-                if option == "repeated" then
-                    FieldRepeatNumFunc(field_type, name)
-                    repeat_num = tonumber(RepeatedNums)
-                end 
-
-                main_table[name] = {}
-                for i=1, repeat_num do
-                    main_table[name][i] = MakeMessageTable(type, {})
-                end
+                HandleMessageNestType(main_table, field_type, name, type, option)
             end
         end
     end
