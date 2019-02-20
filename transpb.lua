@@ -113,6 +113,11 @@ for name in pb.types() do
     end
 end
 
+if dataType == nil 
+then
+    return "MessageNameError"
+end
+
 MakeMessageTable(dataType, data)
 
 -- encode lua table data into binary format in lua string and return
