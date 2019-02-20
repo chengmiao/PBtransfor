@@ -10,7 +10,8 @@ protoc.paths[#protoc.paths + 1] = "/root/transClient/proto"
 protoc.include_imports = true
 pb.option("enum_as_value")
 
-if not pcall(protoc.loadfile, filename)
+local func1 = function() protoc:loadfile(filename) end
+if not pcall(func1)
 then 
     return nil
 end
