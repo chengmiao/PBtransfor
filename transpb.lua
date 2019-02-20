@@ -9,7 +9,10 @@ local protoc = require "protoc"
 protoc.paths[#protoc.paths + 1] = "/root/transClient/proto"
 protoc.include_imports = true
 pb.option("enum_as_value")
-pcall(protoc:loadfile(), filename)
+
+local func1 = protoc:loadfile
+pcall(func1, filename)
+--protoc:loadfile(filename)
 
 
 local randomData = {
