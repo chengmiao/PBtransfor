@@ -74,8 +74,8 @@ function HandleMessageEnumType(MessageTable, FieldName, FieldIndex, FieldBaseTyp
     local enum_table = {}
     while pb.enum(FieldBaseType, i) ~= nil do
         enum_name = enum_name..pb.enum(FieldBaseType, i).."  "
-        i = i + 1
         enum_table[pb.enum(FieldBaseType, i)] = "Enum"
+        i = i + 1
     end
 
     ChooseEnumFunc(enum_name, FieldBaseType, tostring(FieldIndex), FieldName)
