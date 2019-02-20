@@ -38,6 +38,8 @@ function GetRepeatedFieldNums(MessageType, FieldName, FieldOption)
         repeat_num = tonumber(RepeatedNums)
     end
 
+    if repeat_num == nil then repeat_num = 0 end
+
     return repeat_num, is_repeated
 end
 
