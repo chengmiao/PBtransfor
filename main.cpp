@@ -8,14 +8,14 @@ int main(int argc, char* argv[])
 {
     try
     {
-        if (argc != 3)
-        {
-            std::cerr << "Usage: " << argv[0] << " <ip>" << "<port>" << std::endl;
-            return 1;
-        }
+        //if (argc != 3)
+        //{
+            //std::cerr << "Usage: " << argv[0] << " <ip>" << "<port>" << std::endl;
+            //return 1;
+        //}
 
-        TransPBClient client;
-        client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
+        //TransPBClient client;
+        //client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
 
         //std::cout << "============== Use Lua Start =================" << std::endl;
         sol::state lua;
@@ -78,14 +78,14 @@ int main(int argc, char* argv[])
             std::cout << "===============TransPB End!!================" << std::endl;
             std::cout << "////////////////////////////////////////////" << std::endl;
 
-            auto data = client.build_packet(encode_data);
-            if (data == nullptr)
-            {
-                std::cout << "Encode Data Error!" << std::endl;
-                continue;
-            }
+            //auto data = client.build_packet(encode_data);
+            //if (data == nullptr)
+            //{
+                //std::cout << "Encode Data Error!" << std::endl;
+                //continue;
+            //}
 
-            client.send(data->c_str(), data->length());
+            //client.send(data->c_str(), data->length());
         }
     }
     catch (std::exception& e)

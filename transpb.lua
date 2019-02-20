@@ -8,8 +8,14 @@ local protoc = require "protoc"
 
 protoc.paths[#protoc.paths + 1] = "/root/transClient/proto"
 protoc.include_imports = true
-protoc:loadfile(filename)
 pb.option("enum_as_value")
+
+if ~protoc:loadfile(filename)
+then
+    return nil
+end
+
+
 
 local randomData = {
     bool     = function(str) return str == "true" end,
