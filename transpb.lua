@@ -11,7 +11,7 @@ protoc.include_imports = true
 pb.option("enum_as_value")
 
 local func1 = function() protoc:loadfile(filename) end
-pcall(func1)
+pcall(protoc.loadfile, filename)
 --protoc:loadfile(filename)
 
 
