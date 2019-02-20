@@ -10,7 +10,7 @@ int TransPBClient::on_recv(const char * pData, uint32_t len)
     return 0;
 }
 
-std::shared_ptr<string> TransPBClient::build_packet(std::string encode_message)
+std::shared_ptr<std::string> TransPBClient::build_packet(std::string encode_message)
 {
     auto data = std::make_shared<std::string>();
     const int MESSAGE_SIZE = encode_message.length();
