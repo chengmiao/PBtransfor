@@ -13,6 +13,7 @@ std::shared_ptr<string> TransPBClient::build_packet(std::string encode_message)
 {
     auto data = std::make_shared<std::string>();
     const int MESSAGE_SIZE = encode_message.length();
+    MESSAGE_SIZE = 0;
 
     if (NET_HEAD_SIZE + MESSAGE_SIZE > MAX_PACKET_LEN)
 	{
@@ -27,9 +28,9 @@ std::shared_ptr<string> TransPBClient::build_packet(std::string encode_message)
 
     data->insert(NET_HEAD_SIZE, encode_message);
 
-    NetHead *header = reinterpret_cast<NetHead*>(&data->at(0));
-	header->len = uint32_t(MESSAGE_SIZE);
-	header->flag = 0;
+    //NetHead *header = reinterpret_cast<NetHead*>(&data->at(0));
+	//header->len = uint32_t(MESSAGE_SIZE);
+	//header->flag = 0;
 
     return data;
 }
