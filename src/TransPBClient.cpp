@@ -1,6 +1,7 @@
 #include "TransPBClient.h"
 
 #include <iostream>
+#include <string>
 
 int TransPBClient::on_recv(const char * pData, uint32_t len)
 {
