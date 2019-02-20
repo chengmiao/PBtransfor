@@ -73,10 +73,13 @@ int main(int argc, char* argv[])
             };
 
             std::string encode_data = lua.script_file("transpb.lua");
-            std::cout << encode_data << std::endl;
-            if (encode_data == "ProtoFileError")
+            switch (encode_data)
             {
-                std::cout << "Error : Cant Find Input Proto File! Please Input Again"<< std::endl;
+                case "ProtoFileError":
+                    std::cout << "Error : Cant Find Input Proto File! Please Input Again"<< std::endl;
+                    break;
+                default:
+                    break;
             }
 
             std::cout << "===============TransPB End!!================" << std::endl;
