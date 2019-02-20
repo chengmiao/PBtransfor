@@ -75,7 +75,11 @@ function HandleMessageEnumType(MessageTable, FieldName, FieldIndex, FieldBaseTyp
     end
 
     ChooseEnumFunc(enum_name, FieldBaseType, tostring(FieldIndex), FieldName)
-    MessageTable[FieldName] = EnumValue
+
+    if EnumValue ~= nil and pb.enum(FieldBaseType, EnumValue) >= 0
+    then
+        MessageTable[FieldName] = EnumValue
+    end
 end
 
 -- 处理protobuf消息中的嵌套消息类型
