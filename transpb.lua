@@ -11,7 +11,7 @@ protoc.include_imports = true
 pb.option("enum_as_value")
 --pcall(protoc:loadfile(filename))
 
-if not pb.loadfile() then
+if not pb.loadfile(filename) then
     return nil
 end
 
