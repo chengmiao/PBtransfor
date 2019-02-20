@@ -10,7 +10,7 @@ protoc.paths[#protoc.paths + 1] = "/root/transClient/proto"
 protoc.include_imports = true
 pb.option("enum_as_value")
 
-local func1 = protoc:loadfile
+local func1 = protoc:loadfile()
 pcall(func1, filename)
 --protoc:loadfile(filename)
 
