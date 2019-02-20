@@ -13,8 +13,8 @@ int TransPBClient::on_recv(const char * pData, uint32_t len)
 std::shared_ptr<std::string> TransPBClient::build_packet(std::string encode_message)
 {
     auto data = std::make_shared<std::string>();
-    const int MESSAGE_SIZE = encode_message.length();
-    MESSAGE_SIZE = 0;
+    //const int MESSAGE_SIZE = encode_message.length();
+    const int MESSAGE_SIZE = 0;
 
     if (NET_HEAD_SIZE + MESSAGE_SIZE > MAX_PACKET_LEN)
 	{
