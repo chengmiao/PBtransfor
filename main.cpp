@@ -4,28 +4,18 @@
 
 #include "TransPBClient.h"
 
-#pragma pack(push, 1)
-struct NetHead
-{
-	uint32_t len:24;		//这个长度是指报文体的长度，没有包括报文头的长度
-	uint32_t flag:8;
-};
-#pragma pack(pop)
-
-const size_t NET_HEAD_SIZE = sizeof(NetHead);
-
 int main(int argc, char* argv[])
 {
     try
     {
-        //if (argc != 3)
-        //{
-            //std::cerr << "Usage: " << argv[0] << " <ip>" << "<port>" << std::endl;
-            //return 1;
-        //}
+        if (argc != 3)
+        {
+            std::cerr << "Usage: " << argv[0] << " <ip>" << "<port>" << std::endl;
+            return 1;
+        }
 
-        //TransPBClient client;
-        //client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
+        TransPBClient client;
+        client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
 
         //std::cout << "============== Use Lua Start =================" << std::endl;
         sol::state lua;
@@ -34,11 +24,6 @@ int main(int argc, char* argv[])
         while (true)
         {
             std::cout << "===============TransPB Start================" << std::endl;
-            NetHead head;
-            head.flag = 232;
-            std::cout << "Flag Value :" << std::to_string(head.flag) << "Length Value" << std::to_string(head.len) << std::endl;
-
-
             std::cout << "Enter Proto File Name :" << std::endl;
             char proto_file_name[1024];
             std::cin.getline(proto_file_name, 1024);
@@ -93,7 +78,14 @@ int main(int argc, char* argv[])
             std::cout << "===============TransPB End!!================" << std::endl;
             std::cout << "////////////////////////////////////////////" << std::endl;
 
-            //client.send(request, request_length);
+            auto data = client.build_packet(encode_data);
+            if (data == nullptr)
+            {
+                std::cout << "Encode Data Error!" << std::endl;
+                continue;
+            }
+
+            client.send(data->c_str(), data->length());
         }
     }
     catch (std::exception& e)
