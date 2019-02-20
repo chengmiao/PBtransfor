@@ -76,7 +76,8 @@ function HandleMessageEnumType(MessageTable, FieldName, FieldIndex, FieldBaseTyp
 
     ChooseEnumFunc(enum_name, FieldBaseType, tostring(FieldIndex), FieldName)
 
-    if pb.enum(FieldBaseType, tostring(EnumValue)) >= 0 then
+    local func = function() pb.enum(FieldBaseType, tostring(EnumValue)) end
+    if pcall(func) then
         MessageTable[FieldName] = tostring(EnumValue)
     end
 end
