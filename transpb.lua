@@ -1,5 +1,8 @@
-package.path = ';/root/transClient/opt/lua-protobuf/?.lua'
-package.cpath = ';/root/transClient/lib/?.so'
+--package.path = ';/root/transClient/opt/lua-protobuf/?.lua'
+--package.cpath = ';/root/transClient/lib/?.so'
+
+package.path = package.path..';../opt/lua-protobuf/?.lua'
+package.cpath = package.cpath..';../lib/?.so'
 
 
 local pb = require "pb"
