@@ -14,12 +14,32 @@ function proto:tableToExtendBinary(extend_value_table)
     for i=1, #extend_value_table do
         if extend_value_table[i] ~= ""
         then
-            num = num + self:leftShift(1, #self.extend_size_table - 1)
+            num = num + self:leftShift(1, #self.extend_size_table - i)
             str = str .. string.sub(extend_value_table[i], 1, self.extend_size_table[i])
         end
     end
 
     return self:numToAscii(num), str
+end
+
+function proto:binaryToExtendTable(data)
+    local extend_value_table = {}
+    local num = string.byte(data, 1, 1)
+    local count = 0;
+    for i=1, #self.extend_size_table do
+        local tmp = proto:rightShift(num, #self.extend_size_table - i)
+        if tmp == 1
+        then
+            local str_value = string.sub(data, 2, 2 + self.extend_size_table[i])
+            table.insert(extend_value_table, str_value)
+            num = num - proto:leftShift(tmp, #self.extend_size_table - i)
+            count = count + #str_value
+        else
+            table.insert(extend_value_table, "")
+        end
+    end
+
+    return extend_value_table, string.sub(data, #data - 1 - count, #data)
 end
 
 -- 左移
@@ -76,18 +96,21 @@ end
 function proto:unpack(data)
     if data == nil or #data < self.NET_HEAD_SIZE
     then
-        return false, 0, nil
+        return false
     end
 
     local byte1, byte2, byte3 = string.byte(data, 1, self.NET_HEAD_LEN_SIZE)
     local len = self:bufToInt32(0, byte3, byte2, byte1)
     if #data - self.NET_HEAD_SIZE <  len
     then
-        return false, 0, nil
+        return false
     end
 
-    local pack_data = string.sub(data, self.NET_HEAD_SIZE + 1, len)
-    return true, len, pack_data
+    local extend_pack_data = string.sub(data, self.NET_HEAD_LEN_SIZE + 1, len)
+
+    local tmp_table, pack_data = self:binaryToExtendTable(extend_pack_data)
+
+    return true, len, pack_data, tmp_table
 end
 
 return proto
