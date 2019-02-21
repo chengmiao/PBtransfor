@@ -31,6 +31,7 @@ function proto:binaryToExtendTable(data)
         if tmp == 1
         then
             local str_value = string.sub(data, 2, 2 + self.extend_size_table[i])
+            print(string.byte(str_value))
             table.insert(extend_value_table, str_value)
             num = num - proto:leftShift(tmp, #self.extend_size_table - i)
             count = count + #str_value
