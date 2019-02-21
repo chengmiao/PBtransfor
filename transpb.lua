@@ -4,6 +4,7 @@ package.cpath = package.cpath..';../lib/?.so'
 
 local pb = require "pb"
 local protoc = require "protoc"
+local pack = require "unpack"
 
 
 protoc.paths[#protoc.paths + 1] = "../proto"
@@ -134,5 +135,11 @@ print(pb.tohex(bytes))
 -- and decode the binary data back into lua table
 local data2 = assert(pb.decode(messageName, bytes))
 print(require "serpent".block(data2))
+
+print(#bytes)
+local _, _, packed_data = pack:pack(bytes)
+print(pack:pack(bytes))
+print(pack:unpack(packed_data))
+
 
 return bytes
