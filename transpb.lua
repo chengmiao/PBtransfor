@@ -1,6 +1,3 @@
---package.path = ';/root/transClient/opt/lua-protobuf/?.lua'
---package.cpath = ';/root/transClient/lib/?.so'
-
 package.path = package.path..';../opt/lua-protobuf/?.lua'
 package.cpath = package.cpath..';../lib/?.so'
 
@@ -13,12 +10,12 @@ protoc.paths[#protoc.paths + 1] = "../proto"
 protoc.include_imports = true
 pb.option("enum_as_value")
 
+
 local func1 = function() protoc:loadfile(filename) end
 if not pcall(func1)
 then 
     return "ProtoFileError"
 end
---protoc:loadfile(filename)
 
 
 local randomData = {

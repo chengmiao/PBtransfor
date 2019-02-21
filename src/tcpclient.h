@@ -5,13 +5,12 @@
 //created by: arthur 2019/1/10
 
 #include <stdint.h>
-//#include "plat.h"
+#include "plat.h"
 #include <fcntl.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <thread>
 #include <vector>
-//#include "logger.hpp"
+#include "logger.hpp"
 
 #define MAX_RECV_BUF 2048
 
@@ -23,10 +22,10 @@ class TcpClient
 		int send(const char * pData, uint32_t len); 
 
 		virtual void on_connected() {
-			//dlog("on connected"); 
+			dlog("on connected"); 
 	   	}
 		virtual void on_disconnect() {
-			//dlog("on disconnected"); 
+			dlog("on disconnected"); 
 	   	}
 
 		virtual int read_packet(const char * pData , int dataLen) {
