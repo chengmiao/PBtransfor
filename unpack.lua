@@ -71,3 +71,5 @@ function proto:unpack(data)
     local pack_data = string.sub(data, NET_HEAD_SIZE + 1, len)
     return true, len, pack_data
 end
+
+return proto
