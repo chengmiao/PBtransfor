@@ -4,6 +4,23 @@ local num1, num2, num3 = string.byte(data, 1, 3)
 print(string.byte(data, 1, 3))
 
 -- 二进制=ascii
+
+-- 左移
+function leftShift(num, shift)
+    return math.floor(num * (2 ^ shift));
+end
+ 
+-- 右移
+function rightShift(num, shift)
+    return math.floor(num / (2 ^ shift));
+end
+
+-- 转成Ascii
+function numToAscii(num)
+    num = num % 256;
+    return string.char(num);
+end
+
 -- 二进制转int
 function bufToInt32(num1, num2, num3, num4)
     local num = 0;
@@ -23,22 +40,7 @@ function int32ToBufStr(num)
     str = str .. numToAscii(num);
     return str;
 end
- 
--- 左移
-function leftShift(num, shift)
-    return math.floor(num * (2 ^ shift));
-end
- 
--- 右移
-function rightShift(num, shift)
-    return math.floor(num / (2 ^ shift));
-end
 
--- 转成Ascii
-function numToAscii(num)
-    num = num % 256;
-    return string.char(num);
-end
 
 local len = bufToInt32(tonumber("\0"), tonumber(num1), tonumber(num2), tonumber(num3))
 
