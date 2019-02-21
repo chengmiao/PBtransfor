@@ -40,3 +40,5 @@ function numToAscii(num)
     num = num % 256;
     return string.char(num);
 end
+
+return len
