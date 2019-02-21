@@ -68,7 +68,7 @@ function proto:pack(data, extend_value_table)
     local _, head1, head2, head3 = string.byte(str, 1, self.NET_HEAD_SIZE)
     local head_str = string.char(head3) .. string.char(head2) .. string.char(head1)
 
-    local head_extend, data_extend = tableToExtendBinary(extend_value_table)
+    local head_extend, data_extend = self:tableToExtendBinary(extend_value_table)
 
     return true, #data, head_str .. head_extend .. data_extend .. data
 end
