@@ -35,10 +35,10 @@ end
 -- int转二进制
 function proto:int32ToBufStr(num)
     local str = "";
-    str = str .. self:numToAscii(num);
-    str = str .. self:numToAscii(self:rightShift(num, 8));
-    str = str .. self:numToAscii(self:rightShift(num, 16));
     str = str .. self:numToAscii(self:rightShift(num, 24));
+    str = str .. self:numToAscii(self:rightShift(num, 16));
+    str = str .. self:numToAscii(self:rightShift(num, 8));
+    str = str .. self:numToAscii(num);
     return str;
 end
 
