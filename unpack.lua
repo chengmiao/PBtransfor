@@ -49,8 +49,8 @@ function proto:pack(data)
         return false, 0, nil
     end
 
-    local head_str = self:int32ToBufStr(#data)
-    head_str = head_str .. string.char(80)
+    local _, head1, head2, head3 = string.byte(self:int32ToBufStr(#data),
+    local head_str = head3 .. head2 .. head1 .. string.char(80)
 
     return true, #data, head_str .. data
 end
@@ -62,7 +62,7 @@ function proto:unpack(data)
     end
 
     local byte1, byte2, byte3 = string.byte(data, 1, NET_HEAD_LEN_SIZE)
-    local len = self:bufToInt32(0, byte1, byte2, byte3)
+    local len = self:bufToInt32(0, byte3, byte2, byte1)
     if #data - NET_HEAD_SIZE <  len
     then
         return false, 0, nil
