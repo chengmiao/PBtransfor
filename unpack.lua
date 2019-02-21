@@ -42,6 +42,6 @@ function int32ToBufStr(num)
 end
 
 
-local len = bufToInt32(tonumber("\0"), tonumber(num1), tonumber(num2), tonumber(num3))
+local len = bufToInt32(0, tonumber(num1), tonumber(num2), tonumber(num3))
 
 return len
