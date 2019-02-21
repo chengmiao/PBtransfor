@@ -106,7 +106,7 @@ function proto:unpack(data)
         return false
     end
 
-    local extend_pack_data = string.sub(data, self.NET_HEAD_LEN_SIZE + 1, len)
+    local extend_pack_data = string.sub(data, self.NET_HEAD_LEN_SIZE + 1, #data)
 
     local tmp_table, pack_data = self:binaryToExtendTable(extend_pack_data)
 
