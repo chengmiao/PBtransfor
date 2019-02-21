@@ -35,10 +35,10 @@ end
 -- int转二进制
 function proto:int32ToBufStr(num)
     local str = "";
-    str = str .. self:numToAscii(self:rightShift(num, 24));
-    str = str .. self:numToAscii(self:rightShift(num, 16));
-    str = str .. self:numToAscii(self:rightShift(num, 8));
     str = str .. self:numToAscii(num);
+    str = str .. self:numToAscii(self:rightShift(num, 8));
+    str = str .. self:numToAscii(self:rightShift(num, 16));
+    str = str .. self:numToAscii(self:rightShift(num, 24));
     return str;
 end
 
@@ -59,26 +59,26 @@ function proto:pack(data)
     end
 
     local str = self:int32ToBufStr(#data)
-    local _, head1, head2, head3 = string.byte(str, 1, NET_HEAD_SIZE)
+    local head1, head2, head3, _ = string.byte(str, 1, self.NET_HEAD_SIZE)
     local head_str = self:NilString(head3) .. self:NilString(head2) .. self:NilString(head1) .. string.char(80)
 
     return true, #data, head_str .. data
 end
 
 function proto:unpack(data)
-    if data == nil or #data < NET_HEAD_SIZE
+    if data == nil or #data < self.NET_HEAD_SIZE
     then
         return false, 0, nil
     end
 
-    local byte1, byte2, byte3 = string.byte(data, 1, NET_HEAD_LEN_SIZE)
+    local byte1, byte2, byte3 = string.byte(data, 1, self.NET_HEAD_LEN_SIZE)
     local len = self:bufToInt32(0, byte3, byte2, byte1)
-    if #data - NET_HEAD_SIZE <  len
+    if #data - self.NET_HEAD_SIZE <  len
     then
         return false, 0, nil
     end
 
-    local pack_data = string.sub(data, NET_HEAD_SIZE + 1, len)
+    local pack_data = string.sub(data, self.NET_HEAD_SIZE + 1, len)
     return true, len, pack_data
 end
 
