@@ -4,7 +4,7 @@ local num1, num2, num3 = string.byte(data, 1, 3)
 
 -- 二进制=ascii
 -- 二进制转int
-function bufToInt32(num1, num2, num3, num4)
+function bufToInt32(tonumber(num1), tonumber(num2), tonumber(num3), tonumber(num4))
     local num = 0;
     num = num + leftShift(num1, 24);
     num = num + leftShift(num2, 16);
