@@ -1,6 +1,7 @@
 local data = "\0\0\a0chengmiao@lindadfdfdfdfdfdfddf"
 
 local num1, num2, num3 = string.byte(data, 1, 3)
+print(string.byte(data, 1, 3))
 
 -- 二进制=ascii
 -- 二进制转int
