@@ -50,6 +50,7 @@ function proto:pack(data)
     end
 
     local str = self:int32ToBufStr(#data)
+    print(str)
     local _, head1, head2, head3 = string.byte(str, 1, NET_HEAD_SIZE)
     local head_str = head3 .. head2 .. head1 .. string.char(80)
 
