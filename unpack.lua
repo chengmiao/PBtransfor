@@ -39,7 +39,7 @@ function proto:binaryToExtendTable(data)
         end
     end
 
-    return extend_value_table, string.sub(data, 1 + count, #data)
+    return extend_value_table, string.sub(data, 1 + count + 1, #data)
 end
 
 -- 左移
