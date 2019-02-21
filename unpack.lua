@@ -4,7 +4,7 @@ proto.NET_HEAD_SIZE = 4
 proto.NET_HEAD_LEN_SIZE = 3
 proto.NET_HEAD_FLAG_SIZE = 1
 
-proto.extend_size_table = { 1, 0, 0, 0, 0, 0, 0, 0 }
+proto.extend_size_table = { 1, 1, 0, 1, 0, 0, 0, 0 }
 
 -- 二进制=ascii
 
@@ -31,7 +31,6 @@ function proto:binaryToExtendTable(data)
         if tmp == 1
         then
             local str_value = string.sub(data, 2, 2 + self.extend_size_table[i])
-            print(string.byte(str_value))
             table.insert(extend_value_table, str_value)
             num = num - proto:leftShift(tmp, #self.extend_size_table - i)
             count = count + #str_value
