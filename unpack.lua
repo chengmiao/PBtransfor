@@ -15,7 +15,7 @@ function proto:tableToExtendBinary(extend_value_table)
         if extend_value_table[i] ~= ""
         then
             num = num + self:leftShift(1, #self.extend_size_table - 1)
-            str = str .. string.sub(extend_value_table[i], 1, self:extend_size_table[i])
+            str = str .. string.sub(extend_value_table[i], 1, self.extend_size_table[i])
         end
     end
 
