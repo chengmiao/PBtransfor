@@ -136,7 +136,7 @@ print(pb.tohex(bytes))
 local data2 = assert(pb.decode(messageName, bytes))
 print(require "serpent".block(data2))
 
-local _, _, packed_data = pack:pack(bytes)
+local _, _, packed_data = pack:pack(bytes, {string.char(80)})
 print(pb.tohex(packed_data))
 
 --local _, len, unpacked_data = pack:unpack(packed_data)
