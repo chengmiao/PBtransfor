@@ -2,8 +2,6 @@ local data = "\0\0\a0chengmiao@lindadfdfdfdfdfdfddf"
 
 local num1, num2, num3 = string.byte(data, 1, 3)
 
-local len = bufToInt32("\0", num1, num2, num3)
-
 -- 二进制=ascii
 -- 二进制转int
 function bufToInt32(num1, num2, num3, num4)
@@ -40,5 +38,7 @@ function numToAscii(num)
     num = num % 256;
     return string.char(num);
 end
+
+local len = bufToInt32("\0", num1, num2, num3)
 
 return len
