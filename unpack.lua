@@ -51,7 +51,6 @@ function proto:NilString(str)
     return str
 end
 
-0101 0000
 function proto:pack(data)
     if data == nil or #data <= 0
     then
