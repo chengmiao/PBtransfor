@@ -49,7 +49,8 @@ function proto:pack(data)
         return false, 0, nil
     end
 
-    local _, head1, head2, head3 = string.byte(self:int32ToBufStr(#data), 1, NET_HEAD_SIZE)
+    local str = self:int32ToBufStr(#data)
+    local _, head1, head2, head3 = string.byte(str, 1, NET_HEAD_SIZE)
     local head_str = head3 .. head2 .. head1 .. string.char(80)
 
     return true, #data, head_str .. data
