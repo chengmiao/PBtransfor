@@ -42,6 +42,15 @@ function proto:int32ToBufStr(num)
     return str;
 end
 
+function proto:NilString(str)
+    if str == nil
+    then
+        str = '\0'
+    end
+
+    return str
+end
+
 
 function proto:pack(data)
     if data == nil or #data <= 0
@@ -50,9 +59,8 @@ function proto:pack(data)
     end
 
     local str = self:int32ToBufStr(#data)
-    print(str)
     local _, head1, head2, head3 = string.byte(str, 1, NET_HEAD_SIZE)
-    local head_str = head3 .. head2 .. head1 .. string.char(80)
+    local head_str = self:NilString(head3) .. self:NilString(head2) .. self:NilString(head1) .. string.char(80)
 
     return true, #data, head_str .. data
 end
