@@ -139,5 +139,9 @@ print(require "serpent".block(data2))
 local _, _, packed_data = pack:pack(bytes)
 print(pb.tohex(packed_data))
 
+local _, len, unpacked_data = pack:unpack(packed_data)
+print(len)
+print(pb.tohex(unpacked_data))
+
 
 return bytes

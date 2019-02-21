@@ -42,15 +42,6 @@ function proto:int32ToBufStr(num)
     return str;
 end
 
-function proto:NilString(str)
-    if str == nil
-    then
-        str = '\0'
-    end
-
-    return str
-end
-
 function proto:pack(data)
     if data == nil or #data <= 0
     then
