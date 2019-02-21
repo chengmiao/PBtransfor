@@ -51,7 +51,7 @@ function proto:NilString(str)
     return str
 end
 
-
+0101 0000
 function proto:pack(data)
     if data == nil or #data <= 0
     then
@@ -60,7 +60,7 @@ function proto:pack(data)
 
     local str = self:int32ToBufStr(#data)
     local _, head1, head2, head3 = string.byte(str, 1, self.NET_HEAD_SIZE)
-    local head_str = self:NilString(head3) .. self:NilString(head2) .. self:NilString(head1) .. string.char(80)
+    local head_str = string.char(head3) .. string.char(head2) .. string.char(head1) .. string.char(80)
 
     return true, #data, head_str .. data
 end
