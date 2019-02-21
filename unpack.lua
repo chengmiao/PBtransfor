@@ -1,4 +1,4 @@
-local data = "\0\0\a0chengmiao@lindadfdfdfdfdfdfddf"
+local data = "\0\a\00chengmiao@lindadfdfdfdfdfdfddf"
 
 local num1, num2, num3 = string.byte(data, 1, 3)
 print(string.byte(data, 1, 3))
