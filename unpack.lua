@@ -59,7 +59,7 @@ function proto:pack(data)
     end
 
     local str = self:int32ToBufStr(#data)
-    local head1, head2, head3, _ = string.byte(str, 1, self.NET_HEAD_SIZE)
+    local _, head1, head2, head3 = string.byte(str, 1, self.NET_HEAD_SIZE)
     local head_str = self:NilString(head3) .. self:NilString(head2) .. self:NilString(head1) .. string.char(80)
 
     return true, #data, head_str .. data
