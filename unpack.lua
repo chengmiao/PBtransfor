@@ -93,6 +93,7 @@ function proto:pack(data, extend_value_table)
     return true, #data, head_str .. head_extend .. data_extend .. data
 end
 
+
 function proto:unpack(data)
     if data == nil or #data < self.NET_HEAD_SIZE
     then
