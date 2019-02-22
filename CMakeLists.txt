@@ -1,10 +1,9 @@
 set (CMAKE_CXX_COMPILER /usr/local/bin/g++)
 set (CMAKE_C_COMPILER /usr/bin/gcc)
 
+
 cmake_minimum_required(VERSION 2.8)
 project(PBclient)
-
--DCMAKE_TOOLCHAIN_FILE = toolchain.cmake
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
