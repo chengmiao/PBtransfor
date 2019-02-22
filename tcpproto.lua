@@ -3,8 +3,8 @@ proto = {}
 --[[
 
 head_table = {
-    "length" = 20,
-    "flag"   = 65
+    length = 20,
+    flag   = 65
 }
 
 --]]
