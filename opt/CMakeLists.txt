@@ -1,7 +1,7 @@
 project(lua)
 
 #----------- lua lib generate   -----------
-AUX_SOURCE_DIRECTORY(. ALL_SRC)
+file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lua/*.c)	
 
 SET(LIB_SRC ${ALL_SRC})
 LIST(REMOVE_ITEM LIB_SRC lua.c luac.c)
