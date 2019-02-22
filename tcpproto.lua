@@ -55,7 +55,7 @@ end
 
 function proto:unpack(head_msg)
     local head_table = {}
-    local byte1, byte2, byte3, byte4 = string.byte(head, 1, 4)
+    local byte1, byte2, byte3, byte4 = string.byte(head_msg, 1, 4)
     local len = self:bufToInt32(0, byte3, byte2, byte1)
     head_table["length"] = len
 
