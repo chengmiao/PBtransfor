@@ -4,7 +4,7 @@ package.cpath = package.cpath..';../lib/?.so'
 
 local pb = require "pb"
 local protoc = require "protoc"
-local pack = require "unpack"
+local pack = require "tcpproto"
 
 
 protoc.paths[#protoc.paths + 1] = "../proto"
@@ -136,12 +136,18 @@ print(pb.tohex(bytes))
 local data2 = assert(pb.decode(messageName, bytes))
 print(require "serpent".block(data2))
 
-local _, _, packed_data = pack:pack(bytes, {"", string.char(80), "", string.char(80)})
-print(pb.tohex(packed_data))
+--local _, _, packed_data = pack:pack(bytes, {"", string.char(80), "", string.char(80)})
+--print(pb.tohex(packed_data))
 
-local _, len, unpacked_data, tmp_table = pack:unpack(packed_data)
-print(len)
-print(pb.tohex(unpacked_data))
-print(require "serpent".block(tmp_table))
+--local _, len, unpacked_data, tmp_table = pack:unpack(packed_data)
+--print(len)
+--print(pb.tohex(unpacked_data))
+--print(require "serpent".block(tmp_table))
+
+local tmp = pack:pack({ "length" = 80, "flage" = 128})
+print(pb.tohex(tmp))
+
+local head_table = pack:unpack(tmp)
+print(require "serpent".block(head_table))
 
 return bytes
