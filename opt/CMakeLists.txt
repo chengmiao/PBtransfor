@@ -2,17 +2,6 @@ project(lua)
 
 #----------- lua lib generate   -----------
 
-option(BUILD_STATIC "build static library" ON)
-option(LUA_USE_DLOPEN "Enable dlopen support.")
-option(LUA_USE_ISATTY "Enable isatty support.")
-option(LUA_USE_READLINE "Enable readline support.")
-option(LUA_USE_POPEN "Enable lua_popen support.")
-option(LUA_USE_ULONGJMP "Try using _longjmp/_setjmp (more efficient)")
-option(LUA_USE_APICHECK "Enable API checks.")
-option(LUA_USE_MKSTEMP "Use mkstemp." ON)
-option(LUA_ANSI "Disable non-ansi features." OFF)
-
-
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set(CMAKE_C_FLAGS "-DLUA_USE_LINUX -DLUA_USE_DLOPEN -DLUA_USE_MKSTEMP -Wl,-E -ldl -lreadline -lhistory -lncurses")
