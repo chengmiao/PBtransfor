@@ -62,3 +62,5 @@ function proto:unpack(head_msg)
     local flag = self:bufToInt32(0, 0, 0, byte4)
     head_table["flag"] = flag
 end
+
+return proto
