@@ -9,8 +9,10 @@ option(LUA_USE_READLINE "Enable readline support.")
 option(LUA_USE_POPEN "Enable lua_popen support.")
 option(LUA_USE_ULONGJMP "Try using _longjmp/_setjmp (more efficient)")
 option(LUA_USE_APICHECK "Enable API checks.")
-option(LUA_USE_MKSTEMP "Use mkstemp.")
+option(LUA_USE_MKSTEMP "Use mkstemp." ON)
 option(LUA_ANSI "Disable non-ansi features." OFF)
+
+
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set(LUA_USE_LINUX TRUE)
