@@ -15,9 +15,7 @@ option(LUA_ANSI "Disable non-ansi features." OFF)
 
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set(LUA_USE_LINUX TRUE)
-	set(COMMON_CFLAGS "${COMMON_CFLAGS} -DLUA_USE_LINUX -DLUA_USE_DLOPEN -DLUA_USE_MKSTEMP")
-    set(COMMON_LDFLAGS "${COMMON_LDFLAGS} -Wl,-E -ldl -lreadline -lhistory -lncurses")
+	set(CMAKE_C_FLAGS "-DLUA_USE_LINUX -DLUA_USE_DLOPEN -DLUA_USE_MKSTEMP -Wl,-E -ldl -lreadline -lhistory -lncurses")
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
