@@ -2,9 +2,12 @@ proto = {}
 
 --[[
 
-head_table = {
-    length = 20,
-    flag   = 65
+MsgHead = {
+    length        = 0,
+    type_flag     = 0,
+    reflect_flag  = 0,
+    reserve_flag  = 0,
+    extend_flag   = 0,
 }
 
 --]]
@@ -45,24 +48,24 @@ function proto:int32ToBufStr(num)
     return str
 end
 
-function proto:pack(head_table)
-    local head_len_str = self:int32ToBufStr(head_table["length"])
-    local head_flag_str = self:int32ToBufStr(head_table["flag"])
+function proto:pack(MsgHead)
+    local head_len_str = self:int32ToBufStr(MsgHead["length"])
+    local head_flag_str = self:int32ToBufStr(MsgHead["flag"])
 
     local head = string.sub(head_len_str, 1, 3) .. string.sub(head_flag_str, 1, 1)
     return head
 end
 
-function proto:unpack(head_msg)
-    local head_table = {}
-    local byte1, byte2, byte3, byte4 = string.byte(head_msg, 1, 4)
+function proto:unpack(headStr)
+    local MsgHead = {}
+    local byte1, byte2, byte3, byte4 = string.byte(headStr, 1, 4)
     local len = self:bufToInt32(0, byte3, byte2, byte1)
-    head_table["length"] = len
+    MsgHead["length"] = len
 
     local flag = self:bufToInt32(0, 0, 0, byte4)
-    head_table["flag"] = flag
+    MsgHead["flag"] = flag
 
-    return head_table
+    return MsgHead
 end
 
 return proto
