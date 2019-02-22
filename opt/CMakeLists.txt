@@ -3,7 +3,7 @@ project(lua)
 #----------- lua lib generate   -----------
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set (CMAKE_CXX_FLAGS "-std=c++14 -ldl -lpthread")
-    set (CMAKE_C_FLAGS "-fPIC -Wl -E -ldl -lreadline")
+    set (CMAKE_C_FLAGS "-fPIC -Wall -E -ldl -lreadline")
     add_definitions(-DLUA_USE_LINUX)    
 endif()
 
