@@ -147,7 +147,7 @@ print(require "serpent".block(data2))
 local tmp = pack:pack({ length = 80, flag = 128})
 print(pb.tohex(tmp))
 
-local head_table = pack:unpack(tmp)
-print(require "serpent".block(head_table))
+--local head_table = pack:unpack(tmp)
+--print(require "serpent".block(head_table))
 
 return bytes
