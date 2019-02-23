@@ -46,75 +46,51 @@ function proto:operationAnd(number, leftShiftNum, rightShifNum)
     return self:rightShift(tmp, rightShifNum)
 end
 
-function proto:flagToBUfStr(headTable)
+function proto:flagToBufStr(MsgHeadTable)
     local num = 0
     local locate = 0;
     for i, value in ipairs(self.MsgHeadBit) do
-        headTable[self.MsgHeadName[i]] = headTable[self.MsgHeadName[i]] == nil and 0 or headTable[self.MsgHeadName[i]]
+        MsgHeadTable[self.MsgHeadName[i]] = MsgHeadTable[self.MsgHeadName[i]] == nil and 0 or MsgHeadTable[self.MsgHeadName[i]]
         if self.MsgHeadName[i] ~= "length"
         then
-            num = num + self:operationAnd(headTable[self.MsgHeadName[i]], 8 - value, locate)
+            num = num + self:operationAnd(MsgHeadTable[self.MsgHeadName[i]], 8 - value, locate)
             locate = locate + value
         end
     end
-
-    --local tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["type_flag"], 7)))
-    --num = num + tmp
-
-    --tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["reflect_flag"], 7)))
-    --num = num + self:rightShift(tmp, 1)
-
-    --tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["reserve_flag"], 3)))
-    --num = num + self:rightShift(tmp, 2)
-
-    --tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["extend_flag"], 7)))
-    --num = num + self:rightShift(tmp, 7)
 
     return num
 end
 
-function proto:bufStrToFlag(flagValue, flagTable)
+function proto:bufStrToFlag(flagValue, MsgHeadTable)
     local locate = 0;
     for i, value in ipairs(self.MsgHeadBit) do
         if self.MsgHeadName[i] ~= "length"
         then
-            flagTable[self.MsgHeadName[i]] = self:operationAnd(flagValue, locate, 8 - value)
+            MsgHeadTable[self.MsgHeadName[i]] = self:operationAnd(flagValue, locate, 8 - value)
             locate = locate + value
         end
     end
 
-
-    --flagTable["type_flag"] = self:rightShift(flagValue, 7)
-
-    --local num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 1)))
-    --flagTable["reflect_flag"] = self:rightShift(num, 7)
-
-    --num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 2)))
-    --flagTable["reserve_flag"] = self:rightShift(num, 3)
-
-    --num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 7)))
-    --flagTable["extend_flag"] = self:rightShift(num, 7)
-
-    return flagTable
+    return MsgHeadTable
 end
 
-function proto:pack(MsgHead)
-    local head_len_str = self:int32ToBufStr(MsgHead["length"])
-    local head_flag_str = self:int32ToBufStr(self:flagToBUfStr(MsgHead))
+function proto:pack(MsgHeadTable)
+    local head_len_str = self:int32ToBufStr(MsgHeadTable["length"])
+    local head_flag_str = self:int32ToBufStr(self:flagToBufStr(MsgHeadTable))
 
-    local head = string.sub(head_len_str, 1, 3) .. string.sub(head_flag_str, 1, 1)
-    return head
+    local MsgHead = string.sub(head_len_str, 1, 3) .. string.sub(head_flag_str, 1, 1)
+    return MsgHead
 end
 
-function proto:unpack(headStr)
-    local MsgHead = {}
-    local byte1, byte2, byte3, byte4 = string.byte(headStr, 1, 4)
+function proto:unpack(MsgHead)
+    local MsgHeadTable = {}
+    local byte1, byte2, byte3, byte4 = string.byte(MsgHead, 1, 4)
     local len = self:bufToInt32(0, byte3, byte2, byte1)
-    MsgHead["length"] = len
+    MsgHeadTable["length"] = len
 
-    local flag = self:bufToInt32(0, 0, 0, byte4)
+    local flagValue = self:bufToInt32(0, 0, 0, byte4)
 
-    return self:bufStrToFlag(flag, MsgHead)
+    return self:bufStrToFlag(flagValue, MsgHeadTable)
 end
 
 return proto
