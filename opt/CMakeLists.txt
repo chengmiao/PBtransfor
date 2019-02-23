@@ -4,12 +4,13 @@ project(lua)
 
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	set(CMAKE_C_FLAGS "-DLUA_USE_LINUX -DLUA_USE_DLOPEN -DLUA_USE_MKSTEMP -Wl,-E -ldl -lreadline -lhistory -lncurses")
+    set(LUA_USE_LINUX TRUE)
+	set(CMAKE_C_FLAGS "-DLUA_USE_LINUX -DLUA_USE_MKSTEMP -Wl,-E -ldl -lreadline -lhistory -lncurses")
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(LUA_WIN TRUE)
-    set(COMMON_CFLAGS "${COMMON_CFLAGS} -DLUA_BUILD_AS_DLL")
+    set(CMAKE_C_FLAGS "-DLUA_BUILD_AS_DLL")
 endif()
 
 
