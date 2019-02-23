@@ -74,10 +74,10 @@ function proto:bufStrToFlag(flagValue, flagTable)
     flagTable["reflect_flag"] = self:rightShift(num, 7)
 
     num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 2)))
-    flagTable["reserve_flag"] = self:rightShift(num, 3))
+    flagTable["reserve_flag"] = self:rightShift(num, 3)
 
     num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 7)))
-    flagTable["extend_flag"] = self:rightShift(num, 7))
+    flagTable["extend_flag"] = self:rightShift(num, 7)
 
     return flagTable
 end
