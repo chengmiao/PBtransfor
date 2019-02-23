@@ -1,8 +1,7 @@
 proto = {}
 
---[[
 
-MsgHead = {
+proto.MsgHead = {
     length        = 0,
     type_flag     = 0,
     reflect_flag  = 0,
@@ -10,7 +9,6 @@ MsgHead = {
     extend_flag   = 0,
 }
 
---]]
 
 -- 左移
 function proto:leftShift(num, shift)
@@ -48,9 +46,30 @@ function proto:int32ToBufStr(num)
     return str
 end
 
+function proto:flagToBUfStr(headTable)
+    local num = 0
+    for key, value in pairs(self.MsgHead) do
+        headTable[key] = headTable[key] == nil and 0 or headTable[key]
+    end
+
+    local tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["type_flag"], 7)))
+    num = num + tmp
+
+    tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["reflect_flag"], 7)))
+    num = num + self:rightShift(tmp, 1)
+
+    tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["reserve_flag"], 3)))
+    num = num + self:rightShift(tmp, 2)
+
+    tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["extend_flag"], 7)))
+    num = num + self:rightShift(tmp, 7)
+
+    return num
+end
+
 function proto:pack(MsgHead)
     local head_len_str = self:int32ToBufStr(MsgHead["length"])
-    local head_flag_str = self:int32ToBufStr(MsgHead["flag"])
+    local head_flag_str = self:int32ToBufStr(self:flagToBUfStr(MsgHead))
 
     local head = string.sub(head_len_str, 1, 3) .. string.sub(head_flag_str, 1, 1)
     return head

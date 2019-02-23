@@ -84,9 +84,6 @@ int main(int argc, char* argv[])
                 continue;
             }
 
-            uint32_t head_len = lua.script_file("unpack.lua");
-            std::cout << "===============Head Length: " << std::to_string(head_len) << std::endl;
-
             std::cout << "===============TransPB End!!================" << std::endl;
             std::cout << "////////////////////////////////////////////" << std::endl;
 

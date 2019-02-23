@@ -31,12 +31,6 @@ link_directories(
 add_subdirectory(${CMAKE_SOURCE_DIR}/opt)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
 
-#file(GLOB CLIENT_SRCS ${CMAKE_SOURCE_DIR}/src/*.cpp)	
-#file(GLOB CLIENT_HDRS ${CMAKE_SOURCE_DIR}/src/*.h)
-
-#include_directories(${CMAKE_SOURCE_DIR}/src)
-#add_executable(PBclient main.cpp ${CLIENT_SRCS})
-#target_link_libraries(PBclient liblua.a)
 
 
 
