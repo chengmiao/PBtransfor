@@ -42,7 +42,7 @@ function proto:int32ToBufStr(num)
 end
 
 function proto:operationAnd(number, leftShiftNum, rightShifNum)
-    local tmp = string.byte(self:int32ToBufStr(self:leftShift(number, shiftNum)))
+    local tmp = string.byte(self:int32ToBufStr(self:leftShift(number, leftShiftNum)))
     return self:rightShift(tmp, rightShifNum)
 end
 
