@@ -67,6 +67,15 @@ function proto:flagToBUfStr(headTable)
     return num
 end
 
+function proto:bufStrToFlag(flagValue, flagTable)
+    flagTable["type_flag"] = self:rightShift(flagValue, 7)
+    flagTable["reflect_flag"] = self:rightShift(string.byte((self:int32ToBufStr(self:leftShift(flagValue, 1))), 7)
+    flagTable["reserve_flag"] = self:rightShift(string.byte((self:int32ToBufStr(self:leftShift(flagValue, 2))), 3)
+    flagTable["extend_flag"] = self:rightShift(string.byte((self:int32ToBufStr(self:leftShift(flagValue, 7))), 7)
+
+    return flagTable
+end
+
 function proto:pack(MsgHead)
     local head_len_str = self:int32ToBufStr(MsgHead["length"])
     local head_flag_str = self:int32ToBufStr(self:flagToBUfStr(MsgHead))
@@ -82,9 +91,8 @@ function proto:unpack(headStr)
     MsgHead["length"] = len
 
     local flag = self:bufToInt32(0, 0, 0, byte4)
-    MsgHead["flag"] = flag
 
-    return MsgHead
+    return self:bufStrToFlag(flag, MsgHead)
 end
 
 return proto
