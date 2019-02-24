@@ -68,15 +68,9 @@ int main(int argc, char* argv[])
             std::cout << "Enter Message Type Name :" << std::endl;
             get_input_value(lua, "messageName");
 
-            std::string encode_data = lua.script_file("transpb.lua");
-            if (encode_data == "ProtoFileError")
+            std::string encode_data = lua.script_file("client.lua");
+            if (encode_data.empty())
             {
-                std::cout << "Error : Cant Find Input Proto File! Please Input Again"<< std::endl;
-                continue;
-            }
-            else if (encode_data == "MessageNameError")
-            {
-                std::cout << "Error : Cant Find Input Message! Please Input Again"<< std::endl;
                 continue;
             }
 
@@ -97,6 +91,8 @@ int main(int argc, char* argv[])
     {
         std::cerr << "Exception: " << e.what() << "\n";
     }
+
+	system("pause");
   
     return 0;
 }
