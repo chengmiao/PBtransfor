@@ -77,13 +77,6 @@ int main(int argc, char* argv[])
             std::cout << "===============TransPB End!!================" << std::endl;
             std::cout << "////////////////////////////////////////////" << std::endl;
 
-            //auto data = client.build_packet(encode_data);
-            //if (data == nullptr)
-            //{
-                //std::cout << "Encode Data Error!" << std::endl;
-                //continue;
-            //}
-
             //client.send(data->c_str(), data->length());
         }
     }
