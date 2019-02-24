@@ -71,11 +71,7 @@ function proto:bufStrToFlag(flagValue, MsgHeadTable)
         end
     end
 
-<<<<<<< HEAD:tcpproto.lua
     return MsgHeadTable
-=======
-    return flagTable
->>>>>>> 9c4e0a3de7119e9985a91288586e85d7a10008fd:bin/tcpproto.lua
 end
 
 function proto:pack(MsgHeadTable)
