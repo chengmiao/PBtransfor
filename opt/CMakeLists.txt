@@ -27,10 +27,19 @@ file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lua/*.c)
 SET(LIB_SRC ${ALL_SRC})
 LIST(REMOVE_ITEM LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lua/lua.c ${CMAKE_CURRENT_SOURCE_DIR}/lua/luac.c)
 
-ADD_LIBRARY(lua SHARED ${LIB_SRC})
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    ADD_LIBRARY(lua ${LIB_SRC})
 
+    #----------- lua pb.so generate -----------
+    add_library(pb SHARED ${CMAKE_CURRENT_SOURCE_DIR}/lua-protobuf/pb.c)
+    add_dependencies(pb lua)
+endif()
 
-#----------- lua pb.so generate -----------
-add_library(pb SHARED ${CMAKE_CURRENT_SOURCE_DIR}/lua-protobuf/pb.c)
-target_link_libraries(pb ${LUA_LIB})
-add_dependencies(pb lua)
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    ADD_LIBRARY(lua SHARED ${LIB_SRC})
+
+    #----------- lua pb.so generate -----------
+    add_library(pb SHARED ${CMAKE_CURRENT_SOURCE_DIR}/lua-protobuf/pb.c)
+    target_link_libraries(pb ${LUA_LIB})
+    add_dependencies(pb lua)
+endif()
