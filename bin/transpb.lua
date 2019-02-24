@@ -4,7 +4,6 @@ package.cpath = package.cpath..';../lib/?.so'
 
 local pb = require "pb"
 local protoc = require "protoc"
-local pack = require "tcpproto"
 
 
 protoc.paths[#protoc.paths + 1] = "../proto"
@@ -136,12 +135,5 @@ print(pb.tohex(bytes))
 -- and decode the binary data back into lua table
 local data2 = assert(pb.decode(messageName, bytes))
 print(require "serpent".block(data2))
-
-local tmp = pack:pack({length = 20, type_flag = 1, reflect_flag = 0, reserve_flag = 0, extend_flag = 2})
-print(pb.tohex(tmp))
-
-local tmp_table = pack:unpack(tmp)
-print(require "serpent".block(tmp_table))
-
 
 return bytes
