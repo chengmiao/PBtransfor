@@ -58,18 +58,6 @@ function proto:flagToBUfStr(headTable)
         end
     end
 
-    --local tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["type_flag"], 7)))
-    --num = num + tmp
-
-    --tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["reflect_flag"], 7)))
-    --num = num + self:rightShift(tmp, 1)
-
-    --tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["reserve_flag"], 3)))
-    --num = num + self:rightShift(tmp, 2)
-
-    --tmp = string.byte(self:int32ToBufStr(self:leftShift(headTable["extend_flag"], 7)))
-    --num = num + self:rightShift(tmp, 7)
-
     return num
 end
 
@@ -82,18 +70,6 @@ function proto:bufStrToFlag(flagValue, flagTable)
             locate = locate + value
         end
     end
-
-
-    --flagTable["type_flag"] = self:rightShift(flagValue, 7)
-
-    --local num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 1)))
-    --flagTable["reflect_flag"] = self:rightShift(num, 7)
-
-    --num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 2)))
-    --flagTable["reserve_flag"] = self:rightShift(num, 3)
-
-    --num = string.byte(self:int32ToBufStr(self:leftShift(flagValue, 7)))
-    --flagTable["extend_flag"] = self:rightShift(num, 7)
 
     return flagTable
 end
