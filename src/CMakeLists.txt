@@ -7,6 +7,6 @@ file(GLOB CLIENT_SRCS ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB CLIENT_HDRS ${CMAKE_SOURCE_DIR}/src/*.h ${CMAKE_SOURCE_DIR}/src/*.hpp)
 
 
-add_executable(PBclient main.cpp ${CLIENT_HDRS} ${CLIENT_SRCS})
-target_link_libraries(PBclient ${LUA_LIB})
-add_dependencies(PBclient lua)
+#add_executable(PBclient main.cpp ${CLIENT_HDRS} ${CLIENT_SRCS})
+#target_link_libraries(PBclient ${LUA_LIB})
+#add_dependencies(PBclient lua)
