@@ -17,6 +17,7 @@
    #include <winsock2.h>
    #include <io.h>
    #define SLEEP(x) Sleep(x)
+   #define CLOSE(x) closesocket(x)
    #pragma comment(lib, "Ws2_32.lib")
 
 #elif __APPLE__
@@ -56,6 +57,7 @@
     #include <unistd.h>
     #include <netdb.h>
 	#define SLEEP(x) sleep(x)
+    #define CLOSE(x) closesocket(x)
 
 #elif __unix__ // all unices not caught above
     // Unix
