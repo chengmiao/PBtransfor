@@ -57,7 +57,7 @@
     #include <unistd.h>
     #include <netdb.h>
 	#define SLEEP(x) sleep(x)
-    #define CLOSE(x) closesocket(x)
+    #define CLOSE(x) close(x)
 
 #elif __unix__ // all unices not caught above
     // Unix
