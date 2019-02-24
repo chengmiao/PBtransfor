@@ -9,10 +9,10 @@
 int TcpClient::do_connect()
 {
 	static int try_period = 1; 
-	sleep(try_period ); 
+	SLEEP(try_period ); 
 	if (fd != -1)
 	{
-		::close(fd); 
+		::CLOSE(fd); 
 		fd = -1; 
 	}
 
@@ -31,7 +31,7 @@ int TcpClient::do_connect()
 	if (-1 == ::connect(fd, (sockaddr*)&addr, sizeof(addr)))
 	{
 		dlog("failed to connect server error %s:%d",inet_ntoa(addr.sin_addr),m_port);
-		::close(fd); 
+		::CLOSE(fd); 
 		return -1;
 	}
 	is_connected = true; 
@@ -92,7 +92,7 @@ int TcpClient::on_recv(const char * pData, uint32_t len) {
 
 void TcpClient::disconnect()
 {
-	::close(fd); 
+	::CLOSE(fd); 
 	is_connected = false; 
 	m_recv_thread.join(); 
 }
@@ -165,7 +165,7 @@ void TcpClient::run()
 		if (ret == -1)
 		{
 			elog("select error remove %d  from sets", fd);
-			sleep(1); 
+			SLEEP(1); 
 		} else if (ret)
 		{
 			if(FD_ISSET(fd, &read_fds))

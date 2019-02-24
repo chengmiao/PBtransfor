@@ -10,18 +10,19 @@ endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(LUA_WIN TRUE)
-    set(CMAKE_C_FLAGS "-DLUA_BUILD_AS_DLL")
+    set(CMAKE_C_FLAGS "-DLUA_BUILD_AS_DLL /O2 /LD")
 endif()
 
 
 file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lua/*.c)	
 
 SET(LIB_SRC ${ALL_SRC})
-LIST(REMOVE_ITEM LIB_SRC lua.c luac.c)
+LIST(REMOVE_ITEM LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lua/lua.c ${CMAKE_CURRENT_SOURCE_DIR}/lua/luac.c)
 
-ADD_LIBRARY(lua ${LIB_SRC})
+ADD_LIBRARY(lua SHARED ${LIB_SRC})
 
 
 #----------- lua pb.so generate -----------
 add_library(pb SHARED ${CMAKE_CURRENT_SOURCE_DIR}/lua-protobuf/pb.c)
+target_link_libraries(pb ${LUA_LIB})
 add_dependencies(pb lua)
