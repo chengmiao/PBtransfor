@@ -4,6 +4,42 @@
 
 #include "TransPBClient.h"
 
+void get_input_value(sol::state& lua, std::string lua_value_name)
+{
+    char type_value[1024];
+    std::cin.getline(type_value, 1024);
+    lua[lua_value_name] = type_value;
+}
+
+void register_lua_func(sol::state& lua)
+{
+    lua["TypeFieldFunc"] = [&lua](std::string message, std::string name, std::string number, std::string type, std::string option ){
+        std::cout << "Enter Type Value" << std::endl;
+
+        std::cout << "Message       :" << "    " << message << std::endl;
+        std::cout << "FieldName     :" << "    " << name << std::endl;
+        std::cout << "FieldIndex    :" << "    " << number << std::endl;
+        std::cout << "FieldBaseType :" << "    " << type << std::endl;
+        std::cout << "FieldOption   :" << "    " << option << std::endl;
+
+        get_input_value(lua, "TypeValue");
+    };
+
+    lua["FieldRepeatNumFunc"] = [&lua](std::string message, std::string name){
+        std::cout << "Enter Repeated Nums :" << "Message->" << message << "    " << "FieldName->" << name << std::endl;
+
+        get_input_value(lua, "RepeatedNums");
+    };
+
+    lua["ChooseEnumFunc"] = [&lua](std::string enum_name, std::string type, std::string index, std::string name){
+        std::cout << "Choose Enum Value :" << "Enum Type->" << type << "    " << "Enum Value->" << enum_name << std::endl;
+        std::cout << "Name    :" << "    " << name << std::endl;
+        std::cout << "Index   :" << "    " << index << std::endl;
+
+        get_input_value(lua, "EnumValue");
+    };
+}
+
 int main(int argc, char* argv[])
 {
     try
@@ -21,78 +57,25 @@ int main(int argc, char* argv[])
         sol::state lua;
         lua.open_libraries();
 
+        register_lua_func(lua);
+
         while (true)
         {
             std::cout << "===============TransPB Start================" << std::endl;
             std::cout << "Enter Proto File Name :" << std::endl;
-            char proto_file_name[1024];
-            std::cin.getline(proto_file_name, 1024);
-            uint32_t file_length = std::strlen(proto_file_name);
+            get_input_value(lua, "filename");
             
             std::cout << "Enter Message Type Name :" << std::endl;
-            char message_type_name[1024];
-            std::cin.getline(message_type_name, 1024);
-            uint32_t type_length = std::strlen(message_type_name);
+            get_input_value(lua, "messageName");
 
-            lua["filename"] = proto_file_name;
-            lua["messageName"] = message_type_name;
-
-            lua["TypeFieldFunc"] = [&lua](std::string message, std::string name, std::string number, std::string type, std::string option ){
-                std::cout << "Enter Type Value" << std::endl;
-
-                std::cout << "Message       :" << "    " << message << std::endl;
-                std::cout << "FieldName     :" << "    " << name << std::endl;
-                std::cout << "FieldIndex    :" << "    " << number << std::endl;
-                std::cout << "FieldBaseType :" << "    " << type << std::endl;
-                std::cout << "FieldOption   :" << "    " << option << std::endl;
-
-                char type_value[1024];
-                std::cin.getline(type_value, 1024);
-                uint32_t length = std::strlen(type_value);
-                lua["TypeValue"] = type_value;
-            };
-
-            lua["FieldRepeatNumFunc"] = [&lua](std::string message, std::string name){
-                std::cout << "Enter Repeated Nums :" << "Message->" << message << "    " << "FieldName->" << name << std::endl;
-
-                char type_value[1024];
-                std::cin.getline(type_value, 1024);
-                uint32_t length = std::strlen(type_value);
-                lua["RepeatedNums"] = type_value;
-            };
-
-            lua["ChooseEnumFunc"] = [&lua](std::string enum_name, std::string type, std::string index, std::string name){
-                std::cout << "Choose Enum Value :" << "Enum Type->" << type << "    " << "Enum Value->" << enum_name << std::endl;
-                std::cout << "Name    :" << "    " << name << std::endl;
-                std::cout << "Index   :" << "    " << index << std::endl;
-
-                char type_value[1024];
-                std::cin.getline(type_value, 1024);
-                uint32_t length = std::strlen(type_value);
-                lua["EnumValue"] = type_value;
-            };
-
-            std::string encode_data = lua.script_file("transpb.lua");
-            if (encode_data == "ProtoFileError")
+            std::string encode_data = lua.script_file("client.lua");
+            if (encode_data.empty())
             {
-                std::cout << "Error : Cant Find Input Proto File! Please Input Again"<< std::endl;
-                continue;
-            }
-            else if (encode_data == "MessageNameError")
-            {
-                std::cout << "Error : Cant Find Input Message! Please Input Again"<< std::endl;
                 continue;
             }
 
             std::cout << "===============TransPB End!!================" << std::endl;
             std::cout << "////////////////////////////////////////////" << std::endl;
-
-            //auto data = client.build_packet(encode_data);
-            //if (data == nullptr)
-            //{
-                //std::cout << "Encode Data Error!" << std::endl;
-                //continue;
-            //}
 
             //client.send(data->c_str(), data->length());
         }
@@ -101,6 +84,8 @@ int main(int argc, char* argv[])
     {
         std::cerr << "Exception: " << e.what() << "\n";
     }
+
+	system("pause");
   
     return 0;
 }
