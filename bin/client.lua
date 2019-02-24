@@ -1,3 +1,5 @@
+package.cpath = package.cpath..';../lib/?.so'
+
 local msgHead = require "tcpproto"
 local pb = require "pb"
 
