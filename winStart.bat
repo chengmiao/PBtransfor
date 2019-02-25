@@ -8,5 +8,5 @@ set /p port=输入服务器端口：
 
 pause
 
-cd /d %~dp0
+cd /d %~dp0\bin
 start "" "%~dp0\bin\PBclient.exe" %ip% %port%
