@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstring>
-#include "sol.hpp"
 
-#include "TransPBClient.h"
+#include "sol.hpp"
+#include "tcpclient.h"
 
 void get_input_value(sol::state& lua, std::string lua_value_name)
 {
@@ -47,13 +47,13 @@ int main(int argc, char* argv[])
         if (argc != 3)
         {
             std::cerr << "Usage: " << argv[0] << "<ip> " << "<port>" << std::endl;
+			system("pause");
             return 1;
         }
 
-        TransPBClient client;
+        TcpClient client;
         client.connect(argv[1], static_cast<uint16_t>(std::atoi(argv[2])));
 
-        //std::cout << "============== Use Lua Start =================" << std::endl;
         sol::state lua;
         lua.open_libraries();
 
@@ -61,6 +61,11 @@ int main(int argc, char* argv[])
 
         while (true)
         {
+            if (!client.isConnected())
+            {
+                continue;
+            }
+
             std::cout << "===============TransPB Start================" << std::endl;
             std::cout << "Enter Proto File Name :" << std::endl;
             get_input_value(lua, "filename");
