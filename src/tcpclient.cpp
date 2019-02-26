@@ -107,8 +107,13 @@ int TcpClient::send(const char * pData, uint32_t len)
 	}
 	return -1; 
 }
+
 int TcpClient::on_recv(const char * pData, uint32_t len) {
-	ilog("received data%s" , pData); 
+	if (client_lua != nullptr)
+	{
+		(*client_lua)["on_lua_recv"](pData, len);
+	}
+
 	return 0;
 }
 

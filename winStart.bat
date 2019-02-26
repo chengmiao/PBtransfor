@@ -1,12 +1,13 @@
 @echo off
 taskkill /f /im PBclient.exe
 
-pause
+::pause
 
-set /p ip=ÊäÈë·şÎñÆ÷ipµØÖ·£º
-set /p port=ÊäÈë·şÎñÆ÷¶Ë¿Ú£º
+::set /p ip=ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ipï¿½ï¿½Ö·ï¿½ï¿½
+::set /p port=ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿Ú£ï¿?
 
 pause
 
 cd /d %~dp0\bin
-start "" "%~dp0\bin\PBclient.exe" %ip% %port%
+::start "" "%~dp0\bin\PBclient.exe" %ip% %port%
+start "" "%~dp0\bin\PBclient.exe"

@@ -1,21 +1,87 @@
 package.path = package.path..';../opt/lua-protobuf/?.lua'
 package.cpath = package.cpath..';../lib/?.so'
 
-
 local pb = require "pb"
 local protoc = require "protoc"
-
 
 protoc.paths[#protoc.paths + 1] = "../proto"
 protoc.include_imports = true
 pb.option("enum_as_value")
 
+transpb = {}
 
+function transpb:load_file(filename)
+    local func1 = function() protoc:loadfile(filename) end
+    if not pcall(func1)
+    then
+        return false
+    end
 
-local func1 = function() protoc:loadfile(filename) end
-if not pcall(func1)
-then 
-    return "ProtoFileError"
+    return true
+end
+
+function transpb:find_message(message)
+    local dataType = nil
+    local type_table = {}
+
+    for name in pb.types() do
+        type_table[name] = name
+        if name == "."..message then
+            dataType = name
+        end
+    end
+
+    return dataType, type_table
+end
+
+function transpb:encode(message, data)
+    -- encode lua table data into binary format in lua string and return
+    local bytes = assert(pb.encode(message, data))
+    print(pb.tohex(bytes))
+
+    -- and decode the binary data back into lua table
+    local data2 = assert(pb.decode(message, bytes))
+    print(require "serpent".block(data2))
+
+    return bytes
+end
+
+function transpb:decode(message, bytes)
+    -- and decode the binary data back into lua table
+    local data2 = assert(pb.decode(message, bytes))
+    print(require "serpent".block(data2))
+
+    return data2
+end
+
+function transpb:transpb_by_input()
+    print("===============TransPB Start================")
+    print("Enter Proto File Name :")
+
+    local filename = io.read()
+    if not self:load_file(filename)
+    then
+        print("Error : Cant Find Input Proto File! Please Input Again")
+        return
+    end
+
+    print("Enter Message Type Name :")
+    local messageName = io.read()
+    if not self:find_message(messageName)
+    then
+        print("Error : Cant Find Input Message! Please Input Again")
+        return
+    end
+    
+    local data = {}
+    local dataType, type_table = self:find_message(messageName)
+    MakeMessageTable(dataType, data, type_table)
+
+    local bytes = self:encode(messageName, data)
+
+    print("===============TransPB End!!================")
+
+    return bytes
 end
 
 
@@ -26,16 +92,14 @@ local randomData = {
     other    = function(str) return tonumber(str) end
 }
 
-local data = {}
-local type_table = {}
-
 -- 获取重复字段的重复次数
 function GetRepeatedFieldNums(MessageType, FieldName, FieldOption)
     local repeat_num = 1
     local is_repeated = false
     if FieldOption == "repeated" or option == "packed" then
         is_repeated = true
-        FieldRepeatNumFunc(MessageType, FieldName)
+        print("Enter Repeated Nums :Message->" .. MessageType .. "    FieldName->" .. FieldName)
+        local RepeatedNums = io.read()
         repeat_num = tonumber(RepeatedNums)
     end
 
@@ -51,7 +115,14 @@ function HandleMessageBaseType(MessageTable, MessageType, FieldName, FieldIndex,
     if num > 1 or is_repeated then
         MessageTable[FieldName] = {}
         for i=1, num do
-            TypeFieldFunc(MessageType, FieldName, tostring(FieldIndex), FieldBaseType, FieldOption)
+            print("Enter Type Value")
+            print("Message       :    " .. MessageType)
+            print("FieldName     :    " .. FieldName)
+            print("FieldIndex    :    " .. tostring(FieldIndex))
+            print("FieldBaseType :    " .. FieldBaseType)
+            print("FieldOption   :    " .. FieldOption)
+            local TypeValue = io.read()
+       
             if randomData[FieldBaseType] ~= nil then
                 MessageTable[FieldName][i] = randomData[FieldBaseType](TypeValue)
             else
@@ -59,7 +130,14 @@ function HandleMessageBaseType(MessageTable, MessageType, FieldName, FieldIndex,
             end
         end
     else
-        TypeFieldFunc(MessageType, FieldName, tostring(FieldIndex), FieldBaseType, FieldOption)
+        print("Enter Type Value")
+        print("Message       :    " .. MessageType)
+        print("FieldName     :    " .. FieldName)
+        print("FieldIndex    :    " .. tostring(FieldIndex))
+        print("FieldBaseType :    " .. FieldBaseType)
+        print("FieldOption   :    " .. FieldOption)
+        local TypeValue = io.read()
+
         if randomData[FieldBaseType] ~= nil then
             MessageTable[FieldName] = randomData[FieldBaseType](TypeValue)
         else
@@ -79,7 +157,10 @@ function HandleMessageEnumType(MessageTable, FieldName, FieldIndex, FieldBaseTyp
         i = i + 1
     end
 
-    ChooseEnumFunc(enum_name, FieldBaseType, tostring(FieldIndex), FieldName)
+    print("Choose Enum Value :Enum Type->" .. FieldBaseType .. "    Enum Value->" .. enum_name)
+    print("Name    :=    " .. FieldName)
+    print("Index   :    " .. tostring(FieldIndex))
+    local EnumValue = io.read()
 
     if pb.enum(FieldBaseType, tostring(EnumValue)) ~= nil and enum_table[tostring(EnumValue)] ~= nil then
         MessageTable[FieldName] = tostring(EnumValue)
@@ -87,16 +168,16 @@ function HandleMessageEnumType(MessageTable, FieldName, FieldIndex, FieldBaseTyp
 end
 
 -- 处理protobuf消息中的嵌套消息类型
-function HandleMessageNestType(MessageTable, MessageType, FieldName, FieldBaseType, FieldOption)
+function HandleMessageNestType(MessageTable, MessageType, FieldName, FieldBaseType, FieldOption, type_table)
     local num = GetRepeatedFieldNums(MessageType, FieldName, FieldOption)
 
     MessageTable[FieldName] = {}
     for i=1, num do
-        MessageTable[FieldName][i] = MakeMessageTable(FieldBaseType, {})
+        MessageTable[FieldName][i] = MakeMessageTable(FieldBaseType, {}, type_table)
     end
 end
 
-function MakeMessageTable(field_type, main_table) 
+function MakeMessageTable(field_type, main_table, type_table) 
     for name, number, type, value, option in pb.fields(field_type) do
         if type_table[type] == nil then
             HandleMessageBaseType(main_table, field_type, name, number, type, option)
@@ -105,35 +186,12 @@ function MakeMessageTable(field_type, main_table)
             if subType == "enum" then
                 HandleMessageEnumType(main_table, name, number, type)
             elseif subType == "message" then
-                HandleMessageNestType(main_table, field_type, name, type, option)
+                HandleMessageNestType(main_table, field_type, name, type, option, type_table)
             end
         end
     end
 
     return main_table
-end 
-
-local dataType
-for name in pb.types() do
-    type_table[name] = name
-    if name == "."..messageName then
-        dataType = name
-    end
 end
 
-if dataType == nil 
-then
-    return "MessageNameError"
-end
-
-MakeMessageTable(dataType, data)
-
--- encode lua table data into binary format in lua string and return
-local bytes = assert(pb.encode(messageName, data))
-print(pb.tohex(bytes))
-
--- and decode the binary data back into lua table
-local data2 = assert(pb.decode(messageName, bytes))
-print(require "serpent".block(data2))
-
-return bytes
+return transpb
