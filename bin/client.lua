@@ -1,7 +1,7 @@
 --package.cpath = package.cpath..';../lib/?.so'
 
 --local pb = require "pb"
---local msgHead = require "tcpproto"
+local bit = require "tcpproto"
 local msgHead = require "newProto"
 
 
@@ -23,7 +23,7 @@ end
 local headStr = msgHead:pack({length = #endcode_data, type_flag = 1})
 
 -- flag type to build unint32 msg id, example is 12
-local type_msg_id = msgHead:int32ToBufStr(12)
+local type_msg_id = bit:int32ToBufStr(12)
 
 -- the total msg
 local msg_str = headStr .. type_msg_id .. endcode_data
