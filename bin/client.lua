@@ -1,28 +1,35 @@
-package.cpath = package.cpath..';../lib/?.so'
+local func = require "function"
+local head = require "GMsgHead"
 
-local msgHead = require "tcpproto"
-local pb = require "pb"
+function on_lua_recv(data)
+    print("OnRecv Server Message")
+end
 
-local endcode_data = dofile("transpb.lua")
-
-if endcode_data == "ProtoFileError"
+local client_lua = client.new(lua)
+if client_lua == nil
 then
-    print("Error : Cant Find Input Proto File! Please Input Again")
     return
 end
 
-if endcode_data == "MessageNameError"
-then
-    print("Error : Cant Find Input Message! Please Input Again")
-    return
+print("Please Enter Server IP : ")
+local ip = io.read();
+print("Please Enter Server Port : ")
+local port = io.read()
+
+client_lua:connect(ip, tonumber(port), true)
+
+while true do
+    if client_lua:isConnected()
+    then
+        local bytes = func:encode_by_input()
+
+        if bytes ~= nil 
+        then
+            local head_str = head:pack({length = #bytes})
+            local data = head_str .. bytes
+
+            client_lua:send(data, #data)
+        end
+    end
 end
 
-local headStr = msgHead:pack({length = 20, type_flag = 1})
-
-local type_msg_id = string.char(12)
-
-local msg_str = headStr .. type_msg_id .. endcode_data
-
-print(pb.tohex(msg_str))
-
-return msg_str

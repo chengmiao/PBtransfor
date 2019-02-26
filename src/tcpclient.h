@@ -11,12 +11,15 @@
 #include <thread>
 #include <vector>
 #include "logger.hpp"
+#include "sol.hpp"
 
 #define MAX_RECV_BUF 2048
 
 class TcpClient
 {
-	public: 
+	public:
+		TcpClient(sol::state* lua):client_lua(lua){}
+
 		int connect(const char * pHost, uint16_t   port, bool reconnect  = true); 
 		void disconnect(); 
 		int send(const char * pData, uint32_t len); 
@@ -32,7 +35,11 @@ class TcpClient
 			return dataLen; 
 		}
 
-		virtual int on_recv(const char * pData, uint32_t len) ; 
+		virtual int on_recv(const char * pData, uint32_t len) ;
+
+		bool isConnected(){
+			return is_connected;
+		} 
 	private:
 		void run(); 
 		int do_connect(); 
@@ -47,4 +54,9 @@ class TcpClient
 		uint16_t m_port; 
 		std::vector<unsigned long > m_hosts; 
 		uint32_t host_index = 0 ; 
+
+		bool is_reconnect = false;
+		static bool is_init;
+
+		sol::state* client_lua;
 }; 

@@ -6,6 +6,8 @@
 #include <string.h>
 #include <iostream>
 
+bool TcpClient::is_init = false;
+
 int TcpClient::do_connect()
 {
 	static int try_period = 1; 
@@ -41,9 +43,29 @@ int TcpClient::do_connect()
 
 int TcpClient::connect (const char * pHost, uint16_t port, bool reconnect  )
 {
+
+#ifdef _WIN32 
+	if (!is_init)
+	{
+		WSADATA wsaData;
+		int ret;
+		if ((ret = WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0)
+		{
+			elog("WSAStarup faild with error:%d", ret);
+			return -1;
+		}
+		else
+		{
+			dlog("WSAStarup success", ret);
+			is_init = true;
+		}
+	}
+#endif
+
 	dlog("try to connecto to %s ,port %d",pHost, port); 
 	m_port =  port; 
-	m_host = pHost; 
+	m_host = pHost;
+	is_reconnect = reconnect; 
 	struct hostent *hp = gethostbyname(m_host.c_str());
 	if(hp != NULL)  {
 		dlog("host name %s : ", hp->h_name);
@@ -85,17 +107,28 @@ int TcpClient::send(const char * pData, uint32_t len)
 	}
 	return -1; 
 }
+
 int TcpClient::on_recv(const char * pData, uint32_t len) {
-	ilog("received data%s" , pData); 
+	if (client_lua != nullptr)
+	{
+		(*client_lua)["on_lua_recv"](pData, len);
+	}
+
 	return 0;
 }
 
 void TcpClient::disconnect()
 {
-	::CLOSE(fd); 
-	is_connected = false; 
-	m_recv_thread.join(); 
+	if (fd != -1)
+	{
+		is_running = false;  
+		::CLOSE(fd);
+		fd = -1; 
+	}	
+	m_recv_thread.join();
+	is_connected = false;
 }
+
 int TcpClient::do_recv()
 {
 	int recvLen = ::recv(fd, recv_buf + recv_buf_pos , sizeof(recv_buf) - recv_buf_pos , 0);
@@ -160,11 +193,11 @@ void TcpClient::run()
 		struct timeval tv;
 		tv.tv_sec = 5;
 		tv.tv_usec = 0;
-		dlog(" fd is %d",fd); 
+		//dlog(" fd is %d",fd); 
 		int ret = select(fd+1, &read_fds, NULL, &except_fds, &tv);
 		if (ret == -1)
 		{
-			elog("select error remove %d  from sets", fd);
+			//elog("select error remove %d  from sets", fd);
 			SLEEP(1); 
 		} else if (ret)
 		{
@@ -182,8 +215,8 @@ void TcpClient::run()
 		}
 		else
 		{
-			dlog("select timeout"); 
-			if (!is_connected)
+			//dlog("select timeout"); 
+			if (!is_connected && is_reconnect)
 			{
 				do_connect(); 
 			}
