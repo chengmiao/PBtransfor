@@ -80,7 +80,6 @@ int main(int argc, char* argv[])
             }
 
             std::cout << "===============TransPB End!!================" << std::endl;
-            std::cout << "////////////////////////////////////////////" << std::endl;
 
             client.send(encode_data.c_str(), encode_data.length());
         }

@@ -1,7 +1,9 @@
 --package.cpath = package.cpath..';../lib/?.so'
 
-local msgHead = require "tcpproto"
 --local pb = require "pb"
+--local msgHead = require "tcpproto"
+local msgHead = require "newProto"
+
 
 local endcode_data = dofile("transpb.lua")
 
