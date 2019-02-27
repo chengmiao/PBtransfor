@@ -20,22 +20,8 @@ end
 function unpack_flag(bytes)
 end
 
--- client收到服务器返回的数据后的回调，自行定义打印数据或循环发送数据
+-- client收到服务器返回的数据后的回调，自行定义打印数据
 function on_lua_recv(data, len)
-    print("===============OnRecv Message================")
-
-    -- 处理包头
-    local head_table = head:unpack(string.sub(data, 1, 4))
-    func:showTable(head_table)
-
-    -- 处理flag扩展包
-    local flag = unpack_flag(data)
-
-    -- 反序列化pb数据
-    local auto = function() func:decode("SUB.Person", data) end
-    pcall(auto)
-
-    print("===============OnRecv Message End================")
 end
 
 
@@ -126,8 +112,8 @@ function loop_by_txt()
     end
 end
 
---loop_by_input()
-loop_by_txt()
+loop_by_input()
+--loop_by_txt()
 
 
 
