@@ -10,6 +10,10 @@ pb.option("enum_as_value")
 
 transpb = {}
 
+function transpb:load(s)
+    protoc:load(s)
+end
+
 function transpb:load_file(filename)
     local func1 = function() protoc:loadfile(filename) end
     if not pcall(func1)

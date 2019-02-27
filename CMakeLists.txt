@@ -14,6 +14,7 @@ endif()
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(CMAKE_CXX_FLAGS_RELEASE "/MT")
     set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    SET(CMAKE_BUILD_TYPE "Release")
     set(LUA_LIB lua.lib)
 endif()
 
