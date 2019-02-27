@@ -23,6 +23,11 @@ int main(int argc, char* argv[])
         );
 
         lua.script_file("../client.lua");
+
+        while (true)
+        {
+            lua.script_file("loop.lua");
+        }
     }
     catch (std::exception& e)
     {
