@@ -112,8 +112,8 @@ function loop_by_txt()
     end
 end
 
---loop_by_input()
-loop_by_txt()
+loop_by_input()
+--loop_by_txt()
 
 
 
