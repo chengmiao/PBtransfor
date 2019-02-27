@@ -123,8 +123,6 @@ function loop_by_txt()
         then
             client_lua:send(data, #data)
         end
-
-        io.read()
     end
 end
 
