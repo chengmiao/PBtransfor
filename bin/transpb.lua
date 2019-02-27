@@ -1,17 +1,26 @@
 package.path = package.path..';../opt/lua-protobuf/?.lua'
 package.cpath = package.cpath..';../lib/?.so'
 
-local pb = require "pb"
-local protoc = require "protoc"
-
-protoc.paths[#protoc.paths + 1] = "../proto"
-protoc.include_imports = true
-pb.option("enum_as_value")
-
 transpb = {}
 
+transpb.pb = require "pb"
+transpb.protoc = require "protoc"
+transpb.ser = require "serpent"
+
+transpb.protoc.paths[#transpb.protoc.paths + 1] = "../proto"
+transpb.protoc.include_imports = true
+transpb.pb.option("enum_as_value")
+
+function transpb:toHex(bytes)
+    print(self.pb.tohex(bytes))
+end
+
+function transpb:showTable(t)
+    print(self.ser.block(t))
+end
+
 function transpb:load_file(filename)
-    local func1 = function() protoc:loadfile(filename) end
+    local func1 = function() self.protoc:loadfile(filename) end
     if not pcall(func1)
     then
         return false
@@ -24,7 +33,7 @@ function transpb:find_message(message)
     local dataType = nil
     local type_table = {}
 
-    for name in pb.types() do
+    for name in self.pb.types() do
         type_table[name] = name
         if name == "."..message then
             dataType = name
@@ -36,19 +45,19 @@ end
 
 function transpb:encode(message, data)
     -- encode lua table data into binary format in lua string and return
-    local bytes = assert(pb.encode(message, data))
-    print(pb.tohex(bytes))
+    local bytes = assert(self.pb.encode(message, data))
+    print(self.pb.tohex(bytes))
 
     -- and decode the binary data back into lua table
-    local data2 = assert(pb.decode(message, bytes))
-    print(require "serpent".block(data2))
+    local data2 = assert(self.pb.decode(message, bytes))
+    print(self.ser.block(data2))
 
     return bytes
 end
 
 function transpb:decode(message, bytes)
     -- and decode the binary data back into lua table
-    local data2 = assert(pb.decode(message, bytes))
+    local data2 = assert(self.pb.decode(message, bytes))
     print(require "serpent".block(data2))
 
     return data2
@@ -62,7 +71,7 @@ function transpb:transpb_by_input()
     if not self:load_file(filename)
     then
         print("Error : Cant Find Input Proto File! Please Input Again")
-        return
+        return ""
     end
 
     print("Enter Message Type Name :")
@@ -70,7 +79,7 @@ function transpb:transpb_by_input()
     if not self:find_message(messageName)
     then
         print("Error : Cant Find Input Message! Please Input Again")
-        return
+        return ""
     end
     
     local data = {}
@@ -178,11 +187,11 @@ function HandleMessageNestType(MessageTable, MessageType, FieldName, FieldBaseTy
 end
 
 function MakeMessageTable(field_type, main_table, type_table) 
-    for name, number, type, value, option in pb.fields(field_type) do
+    for name, number, type, value, option in transpb.pb.fields(field_type) do
         if type_table[type] == nil then
             HandleMessageBaseType(main_table, field_type, name, number, type, option)
         else 
-            local _, _, subType = pb.type(type)
+            local _, _, subType = transpb.pb.type(type)
             if subType == "enum" then
                 HandleMessageEnumType(main_table, name, number, type)
             elseif subType == "message" then

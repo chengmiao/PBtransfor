@@ -22,6 +22,8 @@ endif()
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(LUA_WIN TRUE)
     set(CMAKE_C_FLAGS "-DLUA_BUILD_AS_DLL /O2 /LD")
+    set(CMAKE_C_FLAGS_RELEASE "/MT")
+    set(CMAKE_C_FLAGS_DEBUG "/MTd")
 endif()
 
 

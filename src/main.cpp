@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
             "isConnected", &TcpClient::isConnected
         );
 
-        lua.script_file("client.lua");
+        lua.script_file("../client.lua");
     }
     catch (std::exception& e)
     {
