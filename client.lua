@@ -22,6 +22,8 @@ end
 
 -- client收到服务器返回的数据后的回调，自行定义打印数据或循环发送数据
 function on_lua_recv(data, len)
+    print("===============OnRecv Message================")
+
     -- 处理包头
     local head_table = head:unpack(string.sub(data, 1, 4))
     func:showTable(head_table)
@@ -30,7 +32,9 @@ function on_lua_recv(data, len)
     local flag = unpack_flag(data)
 
     -- 反序列化pb数据
-    local data2 = func:decode("MessageName", data)
+    local data2 = func:decode("SUB.Person", data)
+
+    print("===============OnRecv Message End================")
 end
 
 
@@ -62,10 +66,13 @@ function loop_by_input()
         local flag = pack_flag({type_flag = 1})
 
         local data = head_str .. flag .. bytes
+        func:toHex(data)
         if client_lua:isConnected()
         then
             client_lua:send(data, #data)
         end
+
+        io.read()
     end
 end
 
