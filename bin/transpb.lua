@@ -14,6 +14,14 @@ function transpb:load(s)
     protoc:load(s)
 end
 
+function transpb:toHex(bytes)
+    print(pb.tohex(bytes))
+end
+
+function transpb:showTable(t)
+    print(require "serpent".block(t))
+end
+
 function transpb:load_file(filename)
     local func1 = function() protoc:loadfile(filename) end
     if not pcall(func1)
