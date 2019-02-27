@@ -51,11 +51,11 @@ function transpb:encode(message, data)
     
     -- encode lua table data into binary format in lua string and return
     local bytes = assert(self.pb.encode(message, data))
-    print(self.pb.tohex(bytes))
+    --print(self.pb.tohex(bytes))
 
     -- and decode the binary data back into lua table
     local data2 = assert(self.pb.decode(message, bytes))
-    print(self.ser.block(data2))
+    --print(self.ser.block(data2))
 
     return bytes
 end
