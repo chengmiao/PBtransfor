@@ -12,6 +12,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set (CMAKE_CXX_FLAGS "/MT")
     set(LUA_LIB lua.lib)
 endif()
 
