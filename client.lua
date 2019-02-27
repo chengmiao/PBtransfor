@@ -1,3 +1,5 @@
+package.path = package.path..';/bin/?.lua'
+
 local func = require "transpb"
 local head = require "GMsgHead"
 
@@ -39,7 +41,7 @@ while true do
         local bytes = func:transpb_by_input()
         local head_str = head:pack({length = #bytes})
         local data = head_str .. bytes
-        
+
         client_lua:send(data, #data)
     end
 end
