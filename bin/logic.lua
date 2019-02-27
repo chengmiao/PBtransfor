@@ -20,28 +20,14 @@ function on_lua_recv(data)
     end
 end
 
--- 客户端连接服务器
-client_lua = client.new(lua)
-if client_lua == nil
+
+local bytes = func:transpb_by_input()
+local head_str = head:pack({length = #bytes})
+local data = head_str .. bytes
+
+if _G.client_lua ~= nil and _G.client_lua:isConnected()
 then
-    return
-end
-
-print("Please Enter Server IP : ")
-local ip = io.read();
-print("Please Enter Server Port : ")
-local port = io.read()
-
-client_lua:connect(ip, tonumber(port), true)
-while true do
-    if client_lua:isConnected()
-    then
-        local bytes = func:transpb_by_input()
-        local head_str = head:pack({length = #bytes})
-        local data = head_str .. bytes
-        
-        client_lua:send(data, #data)
-    end
+    _G.client_lua:send(data, #data)
 end
 
 
@@ -73,7 +59,3 @@ func:toHex(bytes)
 
 local data2 = assert(func:decode("Person", bytes))
 func:showTable(data2)
-
-
-
-
