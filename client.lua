@@ -56,6 +56,7 @@ client_lua:connect(ip, tonumber(port), true)
 -- 根据用户输入，来发送pb序列化数据
 function loop_by_input()
     while true do
+        print("===============TransPB Start================")
         -- 根据输入，获得序列化的pb数据
         local bytes = func:transpb_by_input()
 
@@ -71,7 +72,7 @@ function loop_by_input()
         then
             client_lua:send(data, #data)
         end
-
+        print("===============TransPB End!!================")
         io.read()
     end
 end

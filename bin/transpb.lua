@@ -74,7 +74,6 @@ function transpb:decode(message, bytes)
 end
 
 function transpb:transpb_by_input()
-    print("===============TransPB Start================")
     print("Enter Proto File Name :")
 
     local filename = io.read()
@@ -97,8 +96,6 @@ function transpb:transpb_by_input()
     MakeMessageTable(dataType, data, type_table)
 
     local bytes = self:encode(messageName, data)
-
-    print("===============TransPB End!!================")
 
     return bytes
 end
