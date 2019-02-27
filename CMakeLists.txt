@@ -12,7 +12,8 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-    set (CMAKE_CXX_FLAGS "/MTd")
+    set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
     set(LUA_LIB lua.lib)
 endif()
 
