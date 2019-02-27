@@ -1,12 +1,12 @@
 @echo off
-taskkill /f /im PBclient.exe
+::taskkill /f /im PBclient.exe
 
 ::pause
 
 ::set /p ip=���������ip��ַ��
 ::set /p port=����������˿ڣ�?
 
-pause
+::pause
 
 cd /d %~dp0\bin
 ::start "" "%~dp0\bin\PBclient.exe" %ip% %port%

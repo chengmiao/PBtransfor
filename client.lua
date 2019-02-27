@@ -16,10 +16,14 @@ local head = require "GMsgHead"
 
 -- client收到服务器返回的数据后的回调，自行定义打印数据或循环发送数据
 function on_lua_recv(data, len)
-    print(#data)
     local head_table = head:unpack(string.sub(data, 1, 4))
-    local data2 = func:decode("SUB.Person", string.sub(data, 5, #data))
+    local data2 = func:decode("Person", string.sub(data, 5, #data))
     func:showTable(head_table)
+
+    if client_lua:isConnected()
+    then
+        client_lua:send(data, #data)
+    end
 end
 
 
@@ -36,46 +40,74 @@ print("Please Enter Server Port : ")
 local port = io.read()
 
 client_lua:connect(ip, tonumber(port), true)
-while true do
-    if client_lua:isConnected()
-    then
+
+
+
+-- 根据用户输入，来发送pb序列化数据
+function loop_by_input()
+    while true do
         local bytes = func:transpb_by_input()
         local head_str = head:pack({length = #bytes})
         local data = head_str .. bytes
 
-        client_lua:send(data, #data)
+        if client_lua:isConnected()
+        then
+            client_lua:send(data, #data)
+        end
+
+        io.read()
     end
 end
 
+-- 自定义pb消息文本，来发送pb序列化数据
+function loop_by_txt()
 
--- 自定义proto文本，来序列化数据
-assert(func.protoc:load [[
-   message Phone {
-      optional string name        = 1;
-      optional int64  phonenumber = 2;
-   }
-   message Person {
-      optional string name     = 1;
-      optional int32  age      = 2;
-      optional string address  = 3;
-      repeated Phone  contacts = 4;
-   } ]] )
- 
+    -- 可以自定义加载proto文件
+    --transpb:load_file(file)
+    
+    -- 也自定义proto文本，来序列化数据
+    assert(func.protoc:load [[
+        message Phone {
+            optional string name        = 1;
+            optional int64  phonenumber = 2;
+        }
+        message Person {
+            optional string name     = 1;
+            optional int32  age      = 2;
+            optional string address  = 3;
+            repeated Phone  contacts = 4;
+    } ]] )
 
-local data = {
-   name = "ilse",
-   age  = 18,
-   contacts = {
-      { name = "alice", phonenumber = 12312341234 },
-      { name = "bob",   phonenumber = 45645674567 }
-   }
-}
+    local data = {
+        name = "ilse",
+        age  = 18,
+        contacts = {
+            { name = "alice", phonenumber = 12312341234 },
+            { name = "bob",   phonenumber = 45645674567 }
+        }
+    }
 
-local bytes = assert(func:encode("Person", data))
-func:toHex(bytes)
+    --while true do
+        local bytes = assert(func:encode("Person", data))
+        func:toHex(bytes)
+        local head_str = head:pack({length = #bytes})
+        local data = head_str .. bytes
 
-local data2 = assert(func:decode("Person", bytes))
-func:showTable(data2)
+        local data2 = assert(func:decode("Person", bytes))
+        func:showTable(data2)
+
+        if client_lua:isConnected()
+        then
+            client_lua:send(data, #data)
+        end
+
+        --io.read()
+    --end
+end
+
+--loop_by_input()
+loop_by_txt()
+
 
 
 
