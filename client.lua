@@ -32,7 +32,7 @@ function on_lua_recv(data, len)
     local flag = unpack_flag(data)
 
     -- 反序列化pb数据
-    local auto = function() func:decode("SUB.Person", data end
+    local auto = function() func:decode("SUB.Person", data) end
     pcall(auto)
 
     print("===============OnRecv Message End================")
