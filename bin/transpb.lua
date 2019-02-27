@@ -44,6 +44,11 @@ function transpb:find_message(message)
 end
 
 function transpb:encode(message, data)
+    if self:find_message(message) == nil
+    then
+        return ""
+    end
+    
     -- encode lua table data into binary format in lua string and return
     local bytes = assert(self.pb.encode(message, data))
     print(self.pb.tohex(bytes))
@@ -56,6 +61,11 @@ function transpb:encode(message, data)
 end
 
 function transpb:decode(message, bytes)
+    if self:find_message(message) == nil
+    then
+        return {}
+    end
+
     -- and decode the binary data back into lua table
     local data2 = assert(self.pb.decode(message, bytes))
     print(require "serpent".block(data2))
