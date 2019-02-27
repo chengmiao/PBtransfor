@@ -109,7 +109,7 @@ function loop_by_txt()
     while true do
         -- 获得序列化的pb数据
         local bytes = assert(func:encode("Person", data))
-        --func:toHex(bytes)
+        func:toHex(bytes)
 
         -- 生成包头
         local head_str = head:pack({length = #bytes})
@@ -118,7 +118,7 @@ function loop_by_txt()
         local flag = pack_flag({type_flag = 1})
 
         local data = head_str .. flag .. bytes
-        --func:toHex(data)
+        func:toHex(data)
         if client_lua:isConnected()
         then
             client_lua:send(data, #data)
