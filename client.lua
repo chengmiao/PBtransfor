@@ -118,10 +118,13 @@ function loop_by_txt()
         local flag = pack_flag({type_flag = 1})
 
         local data = head_str .. flag .. bytes
+        func:toHex(data)
         if client_lua:isConnected()
         then
             client_lua:send(data, #data)
         end
+
+        io.read()
     end
 end
 
