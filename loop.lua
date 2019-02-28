@@ -22,6 +22,7 @@ end
 
 -- client收到服务器返回的数据后的回调，自行定义打印数据
 function on_lua_recv(data, len)
+    print("On Recev Message")
 end
 
 -- 根据用户输入，来发送pb序列化数据
@@ -37,7 +38,7 @@ local flag = pack_flag({type_flag = 1})
 
 local data = head_str .. flag .. bytes
 func:toHex(data)
-if _G.client_lua:isConnected()
+if _G.client_lua ~= nil and _G.client_lua:isConnected()
 then
     _G.client_lua:send(data, #data)
 end
