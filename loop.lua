@@ -1,3 +1,5 @@
+package.path = package.path..';/bin/?.lua'
+
 local func = require "transpb"
 local head = require "GMsgHead"
 
