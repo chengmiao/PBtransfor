@@ -4,3 +4,9 @@
 [submodule "opt/lua-protobuf"]
 	path = opt/lua-protobuf
 	url = https://github.com/starwing/lua-protobuf.git
+[submodule "opt/zlib"]
+	path = opt/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "opt/openssl"]
+	path = opt/openssl
+	url = https://github.com/openssl/openssl.git

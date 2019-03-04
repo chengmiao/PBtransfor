@@ -48,3 +48,6 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     target_link_libraries(pb ${LUA_LIB})
     add_dependencies(pb lua)
 endif()
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/zlib)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/openssl)
