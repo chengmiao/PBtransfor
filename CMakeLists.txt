@@ -23,6 +23,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/opt/lua
     ${CMAKE_SOURCE_DIR}/opt/sol2
     ${CMAKE_SOURCE_DIR}/opt/lua-protobuf
+    ${CMAKE_SOURCE_DIR}/opt/zlib
 )
 
 link_directories(
