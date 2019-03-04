@@ -7,3 +7,6 @@
 [submodule "opt/zlib"]
 	path = opt/zlib
 	url = https://github.com/madler/zlib.git
+[submodule "opt/openssl"]
+	path = opt/openssl
+	url = https://github.com/luvit/openssl.git
