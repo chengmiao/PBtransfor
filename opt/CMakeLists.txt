@@ -26,8 +26,6 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(CMAKE_C_FLAGS_DEBUG "/MTd")
 endif()
 
-add_definitions(-D__cplusplus)
-
 
 file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lua/*.c)	
 
