@@ -4,6 +4,7 @@ file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/uWebSockets-0.14.8/src/*.*)
 
 SET(LIB_SRC ${ALL_SRC})
 
+set (CMAKE_CXX_COMPILER /usr/local/bin/g++)
 add_definitions(-D__cplusplus)
 set (CMAKE_CXX_FLAGS "-std=c++14 -ldl -lpthread -fPIC")
 
