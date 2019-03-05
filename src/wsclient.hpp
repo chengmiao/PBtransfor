@@ -41,7 +41,7 @@ class WSClient
 		} 
 
 	private:
-		void run(const char* pURI)
+		void run()
 		{
 			uWS::Hub client;
 

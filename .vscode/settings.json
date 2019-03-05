@@ -83,6 +83,7 @@
         "shared_mutex": "cpp",
         "stack": "cpp",
         "strstream": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "*.ipp": "cpp"
     }
 }
