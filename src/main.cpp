@@ -57,16 +57,14 @@ int main(int argc, char* argv[])
     */
 
         sol::state lua;
-        uWS::Hub h;
 
-        WSClient client(&h, &lua);
+        WSClient client(&lua);
         client.connect("wss://echo.websocket.org");
 		std::cout << "Connection terminated." << std::endl;
         while (true){
-            if(client.is_connected == true)
+            if(client.isConnected())
             {
                 client.send("World");
-                client.is_connected = false;
             }
         }
     }
