@@ -19,7 +19,6 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
 endif()
 
 #add_definitions(-DUSE_ASIO -DASIO_STANDALONE)
-add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
 
 
 include_directories(
