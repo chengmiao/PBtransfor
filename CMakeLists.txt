@@ -18,12 +18,18 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(LUA_LIB lua.lib)
 endif()
 
+#add_definitions(-DUSE_ASIO -DASIO_STANDALONE)
+
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/opt/lua
     ${CMAKE_SOURCE_DIR}/opt/sol2
     ${CMAKE_SOURCE_DIR}/opt/lua-protobuf
     ${CMAKE_SOURCE_DIR}/opt/zlib
+    ${CMAKE_SOURCE_DIR}/opt/uwebsocket/uWebSockets-0.14.8/src
+    ${CMAKE_SOURCE_DIR}/opt/openssl/openssl
+    ${CMAKE_SOURCE_DIR}/opt/asio/asio-boost-1.65.1/include
+    ${CMAKE_SOURCE_DIR}/opt/libuv/include
 )
 
 link_directories(

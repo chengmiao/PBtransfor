@@ -10,3 +10,6 @@
 [submodule "opt/openssl"]
 	path = opt/openssl
 	url = https://github.com/luvit/openssl.git
+[submodule "opt/libuv"]
+	path = opt/libuv
+	url = https://github.com/libuv/libuv.git

@@ -51,3 +51,5 @@ endif()
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/zlib)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/openssl)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libuv)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/uwebsocket)
