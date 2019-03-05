@@ -15,7 +15,7 @@ class WSClient
 
 		int connect(const char * pURI)
 		{
-			m_recv_thread = std::thread(std::bind(&WSClient::run, this, std::placeholders::_1), pURI); 
+			m_recv_thread = std::thread(std::bind(&WSClient::run, this)); 
 			return 0;
 		} 
 
@@ -52,8 +52,8 @@ class WSClient
 					this->is_connected = true;
 	    		});
 
-			//client.connect("wss://echo.websocket.org", nullptr);
-			client.connect(pURI, nullptr);
+			client.connect("wss://echo.websocket.org", nullptr);
+			//client.connect(pURI, nullptr);
 
 			std::function<void(uWS::WebSocket<uWS::CLIENT> *, char *, size_t , uWS::OpCode)> f = std::bind(&WSClient::on_recv, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 			client.onMessage(f);
