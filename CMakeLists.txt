@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.8)
 project(PBclient)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set (CMAKE_CXX_FLAGS "-std=c++14 -ldl -lpthread")
+    set (CMAKE_CXX_FLAGS "-std=c++14 -ldl -lpthread -fPIC")
     set (CMAKE_C_FLAGS "-fPIC -lstdc++")
     set(LUA_LIB liblua.a)    
 endif()
