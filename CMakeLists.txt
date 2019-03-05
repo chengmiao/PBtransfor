@@ -30,6 +30,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/opt/openssl/openssl
     ${CMAKE_SOURCE_DIR}/opt/asio/asio-boost-1.65.1/include
     ${CMAKE_SOURCE_DIR}/opt/libuv/include
+    ${CMAKE_SOURCE_DIR}/opt/openssl/openssl/crypto
 )
 
 link_directories(
