@@ -32,6 +32,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/opt/libuv/include
     ${CMAKE_SOURCE_DIR}/build/openssl/include
     ${CMAKE_SOURCE_DIR}/opt/openssl/openssl-configs/ia32
+    ${CMAKE_SOURCE_DIR}/build/opt/zlib
 )
 
 link_directories(
