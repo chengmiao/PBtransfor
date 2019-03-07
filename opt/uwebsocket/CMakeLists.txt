@@ -1,3 +1,6 @@
+set (CMAKE_CXX_COMPILER /usr/local/bin/g++)
+set (CMAKE_C_COMPILER /usr/bin/gcc)
+
 project(uWS)
 
 file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/uWebSockets-0.14.8/src/*.*)	
