@@ -1,3 +1,6 @@
+set (CMAKE_CXX_COMPILER /usr/local/bin/g++)
+set (CMAKE_C_COMPILER /usr/bin/gcc)
+
 project(main)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/../bin)
