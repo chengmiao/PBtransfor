@@ -16,7 +16,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../lib)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set(LUA_USE_LINUX TRUE)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DLUA_USE_LINUX -DLUA_USE_MKSTEMP -Wl,-E -ldl -lreadline -lhistory -lncurses")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DLUA_USE_LINUX -DLUA_USE_MKSTEMP -Wl,-E -ldl -lreadline -lhistory -lncurses -lstdc++")
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
