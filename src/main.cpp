@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 {
     try
     {
-    /* 
+    
         sol::state lua;
         lua.open_libraries();
 
@@ -25,13 +25,21 @@ int main(int argc, char* argv[])
             "isConnected", &TcpClient::isConnected
         );
 
+        lua.new_usertype<WSClient>( "wsclient",
+            sol::constructors<WSClient(sol::state*)>(),
+            // typical member function
+            "connect", &WSClient::connect,
+            "send", &WSClient::send,
+            "isConnected", &WSClient::isConnected
+        );
+
         lua.script_file("client.lua");
 
         while (true)
         {
             lua.script_file("../loop.lua");
         }
-    */
+    
 
     /*
         uWS::Hub h;
@@ -56,17 +64,15 @@ int main(int argc, char* argv[])
 	    std::cout << "Connection terminated." << std::endl;
     */
 
-        sol::state lua;
+        //sol::state lua;
 
-        WSClient client(&lua);
-        client.connect("wss://echo.websocket.org");
-		std::cout << "Connection terminated." << std::endl;
-        while (true){
-            if(client.isConnected())
-            {
-                client.send("World");
-            }
-        }
+        //WSClient client(&lua);
+        //client.connect("wss://echo.websocket.org");
+		//std::cout << "Connection terminated." << std::endl;
+        //while(true)
+        //{
+            //Sleep(1);
+        //}
     }
     catch (std::exception& e)
     {

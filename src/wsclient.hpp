@@ -15,56 +15,60 @@ class WSClient
 
 		int connect(const char * pURI)
 		{
-			m_recv_thread = std::thread(std::bind(&WSClient::run, this)); 
+			m_recv_thread = std::thread(std::bind(&WSClient::run, this, std::string(pURI))); 
 			return 0;
 		} 
 
-		int send(const char * pData)
+		int send(const char * pData, uint32_t len)
 		{
 			std::cout << "Connection Send." << std::endl;
 			if (ws != nullptr && is_connected)
 			{
-				ws->send(pData);
-				is_connected = false;
+				ws->send(pData, uWS::OpCode::BINARY);
 			}
 
 			return 0;
 		}
 
-		void on_recv(uWS::WebSocket<uWS::CLIENT> *ws, char *message, size_t len, uWS::OpCode opCode)
+		void on_recv(const char * pData, uint32_t len)
 		{
-			std::cout << std::string(message, len) << std::endl;
+			if (client_lua != nullptr)
+			{
+				std::string data(pData, len);
+				(*client_lua)["on_lua_recv"](data, len);
+			}
 		}
 
-		bool isConnected(){
+		bool isConnected()
+		{
 			return is_connected;
-		} 
+		}
 
 	private:
-		void run()
+		void run(std::string strURI)
 		{
 			uWS::Hub client;
 
 			client.onConnection([&](uWS::WebSocket<uWS::CLIENT> *ws, uWS::HttpRequest req) {
-					std::cout << "Connection started." << std::endl;
-					this->ws = ws;
-					//ws->send("Hello");
-					this->is_connected = true;
-	    		});
+				std::cout << "Connection started." << std::endl;
+				this->ws = ws;
+				//ws->send("Hello");
+				this->is_connected = true;
+	    	});
 
-			client.connect("wss://echo.websocket.org", nullptr);
-			//client.connect(pURI, nullptr);
+			client.onMessage([&](uWS::WebSocket<uWS::CLIENT> *ws, char *message, size_t len, uWS::OpCode opCode) {
+				std::cout << "OnRecvWS" << std::endl;
+				this->on_recv(message, len);
+			});
 
-			std::function<void(uWS::WebSocket<uWS::CLIENT> *, char *, size_t , uWS::OpCode)> f = std::bind(&WSClient::on_recv, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
-			client.onMessage(f);
-
+			//client.connect("wss://echo.websocket.org", nullptr);
+			client.connect(strURI.c_str(), nullptr);
 			client.run();
 		}
 
 
 	private:
-		
-		bool is_connected = false; 
+		bool is_connected = false;
 		sol::state* client_lua;
 		uWS::WebSocket<uWS::CLIENT>* ws;
 		std::thread m_recv_thread;
