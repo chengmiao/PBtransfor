@@ -8,7 +8,7 @@ file(GLOB ALL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/uWebSockets-0.14.8/src/*.*)
 SET(LIB_SRC ${ALL_SRC})
 
 #add_definitions(-D__cplusplus)
-#add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -ldl -lpthread -fPIC -O3")   
