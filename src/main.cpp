@@ -17,21 +17,21 @@ int main(int argc, char* argv[])
 
         lua["lua"] = &lua;
 
-        lua.new_usertype<TcpClient>( "client",
-            sol::constructors<TcpClient(sol::state*)>(),
+        //lua.new_usertype<TcpClient>( "client",
+            //sol::constructors<TcpClient(sol::state*)>(),
             // typical member function
-            "connect", &TcpClient::connect,
-            "send", &TcpClient::send,
-            "isConnected", &TcpClient::isConnected
-        );
+            //"connect", &TcpClient::connect,
+            //"send", &TcpClient::send,
+            //"isConnected", &TcpClient::isConnected
+        //);
 
-        lua.new_usertype<WSClient>( "wsclient",
-            sol::constructors<WSClient(sol::state*)>(),
+        //lua.new_usertype<WSClient>( "wsclient",
+            //sol::constructors<WSClient(sol::state*)>(),
             // typical member function
-            "connect", &WSClient::connect,
-            "send", &WSClient::send,
-            "isConnected", &WSClient::isConnected
-        );
+            //"connect", &WSClient::connect,
+            //"send", &WSClient::send,
+            //"isConnected", &WSClient::isConnected
+        //);
 
         lua.script_file("client.lua");
 
