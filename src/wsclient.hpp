@@ -11,7 +11,7 @@
 class WSClient
 {
 	public:
-		//WSClient(sol::state* lua):client_lua(lua){}
+		WSClient(sol::state* lua):client_lua(lua){}
 
 		int connect(const char * pURI)
 		{
@@ -69,7 +69,7 @@ class WSClient
 
 	private:
 		bool is_connected = false;
-		//sol::state* client_lua;
+		sol::state* client_lua;
 		uWS::WebSocket<uWS::CLIENT>* ws;
 		std::thread m_recv_thread;
 }; 
