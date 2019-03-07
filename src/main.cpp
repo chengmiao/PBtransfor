@@ -12,10 +12,10 @@ int main(int argc, char* argv[])
     try
     {
     
-        sol::state lua;
-        lua.open_libraries();
+        //sol::state lua;
+        //lua.open_libraries();
 
-        lua["lua"] = &lua;
+        //lua["lua"] = &lua;
 
         //lua.new_usertype<TcpClient>( "client",
             //sol::constructors<TcpClient(sol::state*)>(),
@@ -33,11 +33,11 @@ int main(int argc, char* argv[])
             //"isConnected", &WSClient::isConnected
         //);
 
-        lua.script_file("client.lua");
+        //lua.script_file("client.lua");
 
         while (true)
         {
-            lua.script_file("../loop.lua");
+            //lua.script_file("../loop.lua");
         }
     
 
