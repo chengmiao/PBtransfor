@@ -10,6 +10,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
     set(LUA_LIB liblua.a) 
     add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
+    add_definitions(-DCMAKE_CXX_COMPILER:FILEPATH=/usr/local/bin/g++ -DCMAKE_C_COMPILER:FILEPATH=/usr/local/bin/gcc)
 endif()
 
 
