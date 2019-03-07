@@ -8,9 +8,10 @@ SET(LIB_SRC ${ALL_SRC})
 #add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ldl -lpthread -fPIC -O3")   
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -ldl -lpthread -fPIC -O3")   
 endif()
 
 add_library(uWS SHARED ${LIB_SRC})
 target_link_libraries(uWS zlib openssl uv)
 add_dependencies(uWS zlib openssl uv)
+
