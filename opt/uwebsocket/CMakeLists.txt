@@ -17,7 +17,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 add_library(uWS SHARED ${LIB_SRC})
-target_link_libraries(uWS zlib openssl uv)
-add_dependencies(uWS zlib openssl uv)
+#target_link_libraries(uWS zlib openssl uv)
+#add_dependencies(uWS zlib openssl uv)
 
 
