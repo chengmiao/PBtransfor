@@ -13,6 +13,7 @@ add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -ldl -lpthread -fPIC -O3")   
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -lstdc++")
+    add_definitions(-DCMAKE_CXX_COMPILER:FILEPATH=/usr/local/bin/g++)
 endif()
 
 add_library(uWS SHARED ${LIB_SRC})
