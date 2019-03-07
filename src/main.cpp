@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 
         lua.new_usertype<TcpClient>( "client",
             sol::constructors<TcpClient(sol::state*)>(),
-             typical member function
+             //typical member function
             "connect", &TcpClient::connect,
             "send", &TcpClient::send,
             "isConnected", &TcpClient::isConnected
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
         lua.new_usertype<WSClient>( "wsclient",
             sol::constructors<WSClient(sol::state*)>(),
-             typical member function
+             //typical member function
             "connect", &WSClient::connect,
             "send", &WSClient::send,
             "isConnected", &WSClient::isConnected
