@@ -18,7 +18,7 @@
 class TcpClient
 {
 	public:
-		TcpClient(sol::state* lua):client_lua(lua){}
+		//TcpClient(sol::state* lua):client_lua(lua){}
 
 		int connect(const char * pHost, uint16_t   port, bool reconnect  = true); 
 		void disconnect(); 

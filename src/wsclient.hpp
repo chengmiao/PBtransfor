@@ -11,7 +11,7 @@
 class WSClient
 {
 	public:
-		WSClient(sol::state* lua):client_lua(lua){}
+		//WSClient(sol::state* lua):client_lua(lua){}
 
 		int connect(const char * pURI)
 		{
