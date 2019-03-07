@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 {
     try
     {
-    
+    /*
         sol::state lua;
         lua.open_libraries();
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
         {
             lua.script_file("../loop.lua");
         }
-        
+    */
 
     /*
         uWS::Hub h;
