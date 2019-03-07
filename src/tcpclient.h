@@ -58,5 +58,5 @@ class TcpClient
 		bool is_reconnect = false;
 		static bool is_init;
 
-		sol::state* client_lua;
+		//sol::state* client_lua;
 }; 

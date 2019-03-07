@@ -109,11 +109,11 @@ int TcpClient::send(const char * pData, uint32_t len)
 }
 
 int TcpClient::on_recv(const char * pData, uint32_t len) {
-	if (client_lua != nullptr)
-	{
-		std::string data(pData, len);
-		(*client_lua)["on_lua_recv"](data, len);
-	}
+	//if (client_lua != nullptr)
+	//{
+		//std::string data(pData, len);
+		//(*client_lua)["on_lua_recv"](data, len);
+	//}
 
 	return 0;
 }

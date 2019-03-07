@@ -32,11 +32,11 @@ class WSClient
 
 		void on_recv(const char * pData, uint32_t len)
 		{
-			if (client_lua != nullptr)
-			{
-				std::string data(pData, len);
-				(*client_lua)["on_lua_recv"](data, len);
-			}
+			//if (client_lua != nullptr)
+			//{
+				//std::string data(pData, len);
+				//(*client_lua)["on_lua_recv"](data, len);
+			//}
 		}
 
 		bool isConnected()
@@ -69,7 +69,7 @@ class WSClient
 
 	private:
 		bool is_connected = false;
-		sol::state* client_lua;
+		//sol::state* client_lua;
 		uWS::WebSocket<uWS::CLIENT>* ws;
 		std::thread m_recv_thread;
 }; 
