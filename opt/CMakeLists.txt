@@ -1,3 +1,7 @@
+set (CMAKE_CXX_COMPILER /usr/local/bin/g++)
+set (CMAKE_C_COMPILER /usr/bin/gcc)
+
+
 project(lua)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/../lib)
