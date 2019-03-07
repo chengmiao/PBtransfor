@@ -8,10 +8,9 @@ project(PBclient)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -ldl -lpthread -fPIC -O3")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-    set(LUA_LIB liblua.a)
-    add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)  
-
+    set(LUA_LIB liblua.a) 
 endif()
+
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(CMAKE_CXX_FLAGS_RELEASE "/MT")
